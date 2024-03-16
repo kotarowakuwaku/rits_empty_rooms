@@ -10,6 +10,7 @@ import {
   FIREBASE_STORAGE_BUCKET,
   FIREBASE_MEASUREMENT_ID
 } from '@/constant/env'
+import { getFirestore } from 'firebase/firestore';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -31,3 +32,7 @@ const app = initializeApp(firebaseConfig);
 
 export const initializeFirebaseApp = () =>
   !getApps().length ? initializeApp(firebaseConfig) : getApp()
+
+const db = getFirestore(app);
+
+export default db;
