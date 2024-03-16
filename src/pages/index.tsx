@@ -17,7 +17,7 @@ export default function Home() {
     const roomData = collection(db,"rooms");
     getDocs(roomData).then((snapShot)=>{
       // console.log(snapShot.docs.map((doc)=>({...doc.data()})));
-      setRooms(snapShot.docs.map((doc) => ({...doc.data() })));
+      // setRooms(snapShot.docs.map((doc) => ({...doc.data() })));
     });
   },[]);
   return (
