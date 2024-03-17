@@ -2,10 +2,18 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
-import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButton, { ToggleButtonProps } from '@mui/material/ToggleButton';
 import ToggleButtonGroup, {
   toggleButtonGroupClasses,
 } from '@mui/material/ToggleButtonGroup';
+import { TimeTable } from '@/types/TimeTable';
+
+interface TabButtonProps extends TimeTable {
+  timeValue: number;
+  dayValue: string;
+  timeOnChange?: ToggleButtonProps['onChange'];
+  dayOnChange?: ToggleButtonProps['onChange'];
+}
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   [`& .${toggleButtonGroupClasses.grouped}`]: {
@@ -23,23 +31,7 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
     },
 }));
 
-export default function CustomizedDividers() {
-  const [alignment, setAlignment] = React.useState('mon');
-  const [formats, setFormats] = React.useState(() => ['italic']);
-
-  const handleFormat = (
-    event: React.MouseEvent<HTMLElement>,
-    newFormats: string[],
-  ) => {
-    setFormats(newFormats);
-  };
-
-  const handleAlignment = (
-    event: React.MouseEvent<HTMLElement>,
-    newAlignment: string,
-  ) => {
-    setAlignment(newAlignment);
-  };
+export default function TimeTableToggleButton({mon = '', tue = '', wed = '', thu = '', fri = '', one = 0, two = 0, three = 0, four = 0, five = 0, six = 0, timeValue = 0, dayValue = '', timeOnChange = () => {}, dayOnChange = () => {}}: TabButtonProps) {
 
   return (
     <div>
@@ -54,52 +46,52 @@ export default function CustomizedDividers() {
       >
         <StyledToggleButtonGroup
           size="medium"
-          value={alignment}
+          value={dayValue}
           exclusive
-          onChange={handleAlignment}
+          onChange={dayOnChange}
           aria-label="text alignment"
         >
-          <ToggleButton value="mon" aria-label="mon">
-            月
+          <ToggleButton value={mon} aria-label="mon">
+            {mon}
           </ToggleButton>
-          <ToggleButton value="tue" aria-label="tue">
-            火
+          <ToggleButton value={tue} aria-label="tue">
+            {tue}
           </ToggleButton>
-          <ToggleButton value="wed" aria-label="wed">
-            水
+          <ToggleButton value={wed} aria-label="wed">
+            {wed}
           </ToggleButton>
-          <ToggleButton value="thu" aria-label="thu" >
-            木
+          <ToggleButton value={thu} aria-label="thu" >
+            {thu}
           </ToggleButton>
-          <ToggleButton value="fri" aria-label="fri" >
-            金
+          <ToggleButton value={fri} aria-label="fri" >
+            {fri}
           </ToggleButton>
         </StyledToggleButtonGroup>
         <Divider flexItem orientation="vertical" sx={{ mx: 0.5, my: 1 }} />
         <StyledToggleButtonGroup
           size="medium"
-          value={formats}
+          value={timeValue}
           exclusive
-          onChange={handleFormat}
+          onChange={timeOnChange}
           aria-label="text formatting"
         >
-          <ToggleButton value="bold" aria-label="bold">
-            1
+          <ToggleButton value={one} aria-label="1">
+            {one}
           </ToggleButton>
-          <ToggleButton value="italic" aria-label="italic">
-            2
+          <ToggleButton value={two} aria-label="2">
+            {two}
           </ToggleButton>
-          <ToggleButton value="underlined" aria-label="underlined">
-            3
+          <ToggleButton value={three} aria-label="3">
+            {three}
           </ToggleButton>
-          <ToggleButton value="color" aria-label="color">
-            4
+          <ToggleButton value={four} aria-label="4">
+            {four}
           </ToggleButton>
-          <ToggleButton value="colo" aria-label="color">
-            5
+          <ToggleButton value={five} aria-label="5">
+            {five}
           </ToggleButton>
-          <ToggleButton value="col" aria-label="color">
-            6
+          <ToggleButton value={six} aria-label="6">
+            {six}
           </ToggleButton>
         </StyledToggleButtonGroup>
       </Paper>
