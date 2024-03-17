@@ -15,19 +15,21 @@ import { DAY_DETAILS, type DayDetails } from "@/types/DayDetails";
 
 export default function Home() {
   const [rooms, setRooms] = useState<DocumentData[]>([]);
+  const [campus, setCampus] = useState<CampusMode>(CAMPUS_MODE.LeftName);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
-      const roomData = collection(db, 'bkc');
+      const selectedCampus = campus;
+      const roomData = collection(db, selectedCampus.toLowerCase());
       const snapshot: QuerySnapshot<DocumentData> = await getDocs(roomData); // snapshotの型をQuerySnapshot<DocumentData>に指定する
       const roomArray: DocumentData[] = snapshot.docs.map((doc) => doc.data()); // roomArrayの型をDocumentData[]に指定する
       setRooms(roomArray);
     };
 
     fetchData();
-  }, []);
+  }, [refreshKey]);
 
-  const [mode, setMode] = useState<CampusMode>(CAMPUS_MODE.LeftName);
   // const tabIndex = mode === CAMPUS_MODE.LeftName ? 0 : mode === CAMPUS_MODE.CenterName ? 1 : 2;
 
   const handleSwitch = (
@@ -35,7 +37,8 @@ export default function Home() {
     newAlignment: CampusMode | null,
   ) => {
     if (newAlignment !== null) {
-      setMode(newAlignment);
+      setCampus(newAlignment);
+      setRefreshKey(old => old + 1);
     }
   };
 
@@ -48,6 +51,7 @@ export default function Home() {
   ) => {
     if (newDay !== null) {
       setDay(newDay);
+      setRefreshKey(old => old + 1);
     }
   };
 
@@ -57,6 +61,7 @@ export default function Home() {
   ) => {
     if (newTime !== null) {
       setTime(newTime);
+      setRefreshKey(old => old + 1);
     }
   };
 
@@ -72,7 +77,7 @@ export default function Home() {
           leftName={CAMPUS_MODE.LeftName}
           centerName={CAMPUS_MODE.CenterName}
           rightName={CAMPUS_MODE.RightName}
-          value={mode}
+          value={campus}
           onChange={handleSwitch}
         />
         <SelectTimeTable
@@ -93,7 +98,7 @@ export default function Home() {
           dayOnChange={handleDay}
         />
         <div>
-          {mode}キャンパスのページです
+          {campus}キャンパスのページです
           <br />
           {day}曜日{time}時限目の空き教室を表示します
         </div>
