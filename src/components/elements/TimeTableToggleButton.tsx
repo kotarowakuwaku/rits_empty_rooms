@@ -1,18 +1,18 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Divider from '@mui/material/Divider';
-import Paper from '@mui/material/Paper';
-import ToggleButton, { ToggleButtonProps } from '@mui/material/ToggleButton';
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import Divider from "@mui/material/Divider";
+import Paper from "@mui/material/Paper";
+import ToggleButton, { ToggleButtonProps } from "@mui/material/ToggleButton";
 import ToggleButtonGroup, {
   toggleButtonGroupClasses,
-} from '@mui/material/ToggleButtonGroup';
-import { TimeTable } from '@/types/TimeTable';
+} from "@mui/material/ToggleButtonGroup";
+import { TimeTable } from "@/types/TimeTable";
 
 interface TabButtonProps extends TimeTable {
   timeValue: number;
   dayValue: string;
-  timeOnChange?: ToggleButtonProps['onChange'];
-  dayOnChange?: ToggleButtonProps['onChange'];
+  timeOnChange?: ToggleButtonProps["onChange"];
+  dayOnChange?: ToggleButtonProps["onChange"];
 }
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
@@ -27,21 +27,36 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   [`& .${toggleButtonGroupClasses.middleButton},& .${toggleButtonGroupClasses.lastButton}`]:
     {
       marginmon: -1,
-      bordermon: '1px solid transparent',
+      bordermon: "1px solid transparent",
     },
 }));
 
-export default function TimeTableToggleButton({mon = '', tue = '', wed = '', thu = '', fri = '', one = 0, two = 0, three = 0, four = 0, five = 0, six = 0, timeValue = 0, dayValue = '', timeOnChange = () => {}, dayOnChange = () => {}}: TabButtonProps) {
-
+export default function TimeTableToggleButton({
+  mon = "",
+  tue = "",
+  wed = "",
+  thu = "",
+  fri = "",
+  one = 0,
+  two = 0,
+  three = 0,
+  four = 0,
+  five = 0,
+  six = 0,
+  timeValue = 0,
+  dayValue = "",
+  timeOnChange = () => {},
+  dayOnChange = () => {},
+}: TabButtonProps) {
   return (
     <div>
       <Paper
         elevation={0}
         sx={{
-          display: 'flex',
+          display: "flex",
           border: (theme) => `1px solid ${theme.palette.divider}`,
-          flexWrap: 'wrap',
-          width:'fit-content'
+          flexWrap: "wrap",
+          width: "fit-content",
         }}
       >
         <StyledToggleButtonGroup
@@ -60,10 +75,10 @@ export default function TimeTableToggleButton({mon = '', tue = '', wed = '', thu
           <ToggleButton value={wed} aria-label="wed">
             {wed}
           </ToggleButton>
-          <ToggleButton value={thu} aria-label="thu" >
+          <ToggleButton value={thu} aria-label="thu">
             {thu}
           </ToggleButton>
-          <ToggleButton value={fri} aria-label="fri" >
+          <ToggleButton value={fri} aria-label="fri">
             {fri}
           </ToggleButton>
         </StyledToggleButtonGroup>
