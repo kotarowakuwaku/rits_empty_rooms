@@ -2,7 +2,12 @@ import Head from "next/head";
 import { Inter } from "next/font/google";
 import db from "@/lib/firebase/firebase";
 import { SyntheticEvent, useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  QuerySnapshot,
+  DocumentData,
+} from "firebase/firestore";
 import Header from "@/components/layouts/Header";
 import TabButton from "@/components/elements/TabButton";
 import { Box } from "@mui/material";
@@ -14,16 +19,22 @@ import { DAY_DETAILS, type DayDetails } from "@/types/DayDetails";
 // const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  // const [rooms, setRooms] = useState([]);
+  const [rooms, setRooms] = useState<DocumentData[]>([]);
+  const [campus, setCampus] = useState<CampusMode>(CAMPUS_MODE.LeftName);
+  const [refreshKey, setRefreshKey] = useState(0);
 
-  // useEffect(()=>{
-  //   const roomData = collection(db,"rooms");
-  //   getDocs(roomData).then((snapShot)=>{
-  // console.log(snapShot.docs.map((doc)=>({...doc.data()})));
-  // setRooms(snapShot.docs.map((doc) => ({...doc.data() })));
-  //   });
-  // },[]);
-  const [mode, setMode] = useState<CampusMode>(CAMPUS_MODE.LeftName);
+  useEffect(() => {
+    const fetchData = async () => {
+      const selectedCampus = campus;
+      const roomData = collection(db, selectedCampus.toLowerCase());
+      const snapshot: QuerySnapshot<DocumentData> = await getDocs(roomData); // snapshotの型をQuerySnapshot<DocumentData>に指定する
+      const roomArray: DocumentData[] = snapshot.docs.map((doc) => doc.data()); // roomArrayの型をDocumentData[]に指定する
+      setRooms(roomArray);
+    };
+
+    fetchData();
+  }, [refreshKey]);
+
   // const tabIndex = mode === CAMPUS_MODE.LeftName ? 0 : mode === CAMPUS_MODE.CenterName ? 1 : 2;
 
   const handleSwitch = (
@@ -31,7 +42,8 @@ export default function Home() {
     newAlignment: CampusMode | null,
   ) => {
     if (newAlignment !== null) {
-      setMode(newAlignment);
+      setCampus(newAlignment);
+      setRefreshKey((old) => old + 1);
     }
   };
 
@@ -44,6 +56,7 @@ export default function Home() {
   ) => {
     if (newDay !== null) {
       setDay(newDay);
+      setRefreshKey((old) => old + 1);
     }
   };
 
@@ -53,6 +66,7 @@ export default function Home() {
   ) => {
     if (newTime !== null) {
       setTime(newTime);
+      setRefreshKey((old) => old + 1);
     }
   };
 
@@ -68,7 +82,7 @@ export default function Home() {
           leftName={CAMPUS_MODE.LeftName}
           centerName={CAMPUS_MODE.CenterName}
           rightName={CAMPUS_MODE.RightName}
-          value={mode}
+          value={campus}
           onChange={handleSwitch}
         />
         <SelectTimeTable
@@ -88,18 +102,47 @@ export default function Home() {
           timeOnChange={handleTime}
           dayOnChange={handleDay}
         />
-        {/* <div>
-        {rooms.map((room) => (
-          // eslint-disable-next-line react/jsx-key
-          <div>
-            <h1>{room.aaa}</h1>
-          </div>
-        ))}
-      </div> */}
         <div>
-          {mode}キャンパスのページです
+          {campus}キャンパスのページです
           <br />
           {day}曜日{time}時限目の空き教室を表示します
+        </div>
+        <div>
+          {rooms.map((emptyRooms) => {
+            return (
+              <>
+                <h2>クリエーションコア</h2>
+                <div key={emptyRooms.rooms}>
+                  {emptyRooms.rooms.map((emptyRoom: string) => {
+                    if (emptyRoom.match(/^cc\d/gi) !== null) {
+                      return (
+                        <div key={emptyRoom}>
+                          <p>{emptyRoom}</p>
+                        </div>
+                      );
+                    }
+                    return null; // 条件に一致しない場合は null を返す
+                  })}
+                </div>
+                <h2>コラーニングⅠ</h2>
+                <div key={emptyRooms.rooms}>
+                  {emptyRooms.rooms.map((emptyRoom: string) => {
+                    if (emptyRoom.match(/^c[1234]/gi) !== null) {
+                      return (
+                        <div
+                          key={emptyRoom}
+                          style={{ float: "left", margin: "0 5px" }}
+                        >
+                          <div>{emptyRoom}</div>
+                        </div>
+                      );
+                    }
+                    return null; // 条件に一致しない場合は null を返す
+                  })}
+                </div>
+              </>
+            );
+          })}
         </div>
       </main>
     </>
