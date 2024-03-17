@@ -114,7 +114,7 @@ export default function Home() {
                 <h2>クリエーションコア</h2>
                 <div key={emptyRooms.rooms}>
                   {emptyRooms.rooms.map((emptyRoom: string) => {
-                    if (emptyRoom.indexOf("cc") !== -1) {
+                    if (emptyRoom.match(/^cc\d/gi) !== null) {
                       return (
                         <div key={emptyRoom}>
                           <p>{emptyRoom}</p>
