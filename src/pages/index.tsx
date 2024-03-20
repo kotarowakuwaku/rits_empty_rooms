@@ -15,6 +15,7 @@ import SelectTimeTable from "@/components/elements/TimeTableToggleButton";
 import { CAMPUS_MODE, type CampusMode } from "@/types/CampusMode";
 import { TiME_DETAILS, type TimeDetails } from "@/types/TimeDetails";
 import { DAY_DETAILS, type DayDetails } from "@/types/DayDetails";
+import { C1_ROOMS,C2_ROOMS } from "@/types/EmptyRooms";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -22,34 +23,14 @@ export default function Home() {
   const [rooms, setRooms] = useState<DocumentData[]>([]);
   const [campus, setCampus] = useState<CampusMode>(CAMPUS_MODE.LeftName);
   const [refreshKey, setRefreshKey] = useState(0);
-  const C1: string[] = [
-    "c101",
-    "c102",
-    "c103",
-    "c104",
-    "c105",
-    "c106",
-    "c107",
-    "c108",
-    "c109",
-    "c201",
-    "c202",
-    "c203",
-    "c204",
-    "c205",
-    "c206",
-    "c301",
-    "c302",
-    "c303",
-    "c304",
-    "c305",
-    "c306",
-    "c401",
-    "c402",
-    "c403",
-  ];
+
+  const C1: string[] = C1_ROOMS;
+  const C2: string[] = C2_ROOMS;
 
   const [C1roomsObject, setC1roomsObject] = useState<{
+    [key: string]: boolean;
+  }>({});
+  const [C2roomsObject, setC2roomsObject] = useState<{
     [key: string]: boolean;
   }>({});
 
@@ -61,21 +42,29 @@ export default function Home() {
       const roomArray: DocumentData[] = snapshot.docs.map((doc) => doc.data()); // roomArrayの型をDocumentData[]に指定する
       setRooms(roomArray);
 
-      const kari: { [key: string]: boolean } = {};
+      const tempC1: { [key: string]: boolean } = {};
+      const tempC2: { [key: string]: boolean } = {};
 
       C1.forEach((room) => {
-        kari[room] = false;
+        tempC1[room] = false;
+      });
+      C2.forEach((room) => {
+        tempC2[room] = false;
       });
 
       roomArray.forEach((emptyRooms) => {
         emptyRooms.rooms.forEach((emptyRoom: string) => {
           if (C1.includes(emptyRoom)) {
-            kari[emptyRoom] = true; // 部屋が存在する場合、trueに設定
+            tempC1[emptyRoom] = true;
+          }
+          if (C2.includes(emptyRoom)) {
+            tempC2[emptyRoom] = true;
           }
         });
       });
 
-      setC1roomsObject(kari);
+      setC1roomsObject(tempC1);
+      setC2roomsObject(tempC2);
     };
 
     fetchData();
@@ -156,7 +145,7 @@ export default function Home() {
           {day}曜日{time}時限目の空き教室を表示します
         </div>
 
-        <div>
+        <div style={{display:'inline-block'}}>
           <h2>コラーニングⅠ</h2>
           {C1.map((CheckC1emptyRoom: string) => {
             if (C1roomsObject[CheckC1emptyRoom] === true) {
@@ -175,6 +164,30 @@ export default function Home() {
                   style={{ float: "left", margin: "0 5px", opacity: "0.1" }}
                 >
                   <div>{CheckC1emptyRoom}</div>
+                </div>
+              );
+            }
+          })}
+        </div>
+        <div style={{display:'inline-block'}}>
+          <h2>コラーニングⅡ</h2>
+          {C2.map((CheckC2emptyRoom: string) => {
+            if (C2roomsObject[CheckC2emptyRoom] === true) {
+              return (
+                <div
+                  key={CheckC2emptyRoom}
+                  style={{ float: "left", margin: "0 5px" }}
+                >
+                  <div>{CheckC2emptyRoom}</div>
+                </div>
+              );
+            } else if (C2roomsObject[CheckC2emptyRoom] === false) {
+              return (
+                <div
+                  key={CheckC2emptyRoom}
+                  style={{ float: "left", margin: "0 5px", opacity: "0.1" }}
+                >
+                  <div>{CheckC2emptyRoom}</div>
                 </div>
               );
             }
