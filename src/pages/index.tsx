@@ -148,49 +148,35 @@ export default function Home() {
         <div style={{ display: "inline-block" }}>
           <h2>コラーニングⅠ</h2>
           {C1.map((CheckC1emptyRoom: string) => {
-            if (C1roomsObject[CheckC1emptyRoom] === true) {
-              return (
-                <div
-                  key={CheckC1emptyRoom}
-                  style={{ float: "left", margin: "0 5px" }}
-                >
-                  <div>{CheckC1emptyRoom}</div>
-                </div>
-              );
-            } else if (C1roomsObject[CheckC1emptyRoom] === false) {
-              return (
-                <div
-                  key={CheckC1emptyRoom}
-                  style={{ float: "left", margin: "0 5px", opacity: "0.1" }}
-                >
-                  <div>{CheckC1emptyRoom}</div>
-                </div>
-              );
-            }
+            return (
+              <div
+                key={CheckC1emptyRoom}
+                style={{
+                  float: "left",
+                  margin: "0 5px",
+                  opacity: C1roomsObject[CheckC1emptyRoom] ? "1" : "0.1",
+                }}
+              >
+                <div>{CheckC1emptyRoom}</div>
+              </div>
+            );
           })}
         </div>
         <div style={{ display: "inline-block" }}>
           <h2>コラーニングⅡ</h2>
           {C2.map((CheckC2emptyRoom: string) => {
-            if (C2roomsObject[CheckC2emptyRoom] === true) {
-              return (
-                <div
-                  key={CheckC2emptyRoom}
-                  style={{ float: "left", margin: "0 5px" }}
-                >
-                  <div>{CheckC2emptyRoom}</div>
-                </div>
-              );
-            } else if (C2roomsObject[CheckC2emptyRoom] === false) {
-              return (
-                <div
-                  key={CheckC2emptyRoom}
-                  style={{ float: "left", margin: "0 5px", opacity: "0.1" }}
-                >
-                  <div>{CheckC2emptyRoom}</div>
-                </div>
-              );
-            }
+            return (
+              <div
+                key={CheckC2emptyRoom}
+                style={{
+                  float: "left",
+                  margin: "0 5px",
+                  opacity: C2roomsObject[CheckC2emptyRoom] ? "1" : "0.1",
+                }}
+              >
+                <div>{CheckC2emptyRoom}</div>
+              </div>
+            );
           })}
         </div>
       </main>
