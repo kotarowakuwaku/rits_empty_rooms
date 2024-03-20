@@ -22,6 +22,36 @@ export default function Home() {
   const [rooms, setRooms] = useState<DocumentData[]>([]);
   const [campus, setCampus] = useState<CampusMode>(CAMPUS_MODE.LeftName);
   const [refreshKey, setRefreshKey] = useState(0);
+  const C1: string[] = [
+    "c101",
+    "c102",
+    "c103",
+    "c104",
+    "c105",
+    "c106",
+    "c107",
+    "c108",
+    "c109",
+    "c201",
+    "c202",
+    "c203",
+    "c204",
+    "c205",
+    "c206",
+    "c301",
+    "c302",
+    "c303",
+    "c304",
+    "c305",
+    "c306",
+    "c401",
+    "c402",
+    "c403",
+  ];
+
+  const [C1roomsObject, setC1roomsObject] = useState<{
+    [key: string]: boolean;
+  }>({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +60,22 @@ export default function Home() {
       const snapshot: QuerySnapshot<DocumentData> = await getDocs(roomData); // snapshotの型をQuerySnapshot<DocumentData>に指定する
       const roomArray: DocumentData[] = snapshot.docs.map((doc) => doc.data()); // roomArrayの型をDocumentData[]に指定する
       setRooms(roomArray);
+
+      const kari: { [key: string]: boolean } = {};
+
+      C1.forEach((room) => {
+        kari[room] = false;
+      });
+
+      roomArray.forEach((emptyRooms) => {
+        emptyRooms.rooms.forEach((emptyRoom: string) => {
+          if (C1.includes(emptyRoom)) {
+            kari[emptyRoom] = true; // 部屋が存在する場合、trueに設定
+          }
+        });
+      });
+
+      setC1roomsObject(kari);
     };
 
     fetchData();
@@ -75,7 +121,9 @@ export default function Home() {
       <Head>
         <title>Create Next App</title>
       </Head>
-      <main>
+      <main
+        style={{ backgroundColor: "#EDEAE8", width: "100vw", height: "100vh" }}
+      >
         <Header />
         <Box sx={{ marginTop: "48px" }} />
         <TabButton
@@ -107,41 +155,29 @@ export default function Home() {
           <br />
           {day}曜日{time}時限目の空き教室を表示します
         </div>
+
         <div>
-          {rooms.map((emptyRooms) => {
-            return (
-              <>
-                <h2>クリエーションコア</h2>
-                <div key={emptyRooms.rooms}>
-                  {emptyRooms.rooms.map((emptyRoom: string) => {
-                    if (emptyRoom.match(/^cc\d/gi) !== null) {
-                      return (
-                        <div key={emptyRoom}>
-                          <p>{emptyRoom}</p>
-                        </div>
-                      );
-                    }
-                    return null; // 条件に一致しない場合は null を返す
-                  })}
+          <h2>コラーニングⅠ</h2>
+          {C1.map((CheckC1emptyRoom: string) => {
+            if (C1roomsObject[CheckC1emptyRoom] === true) {
+              return (
+                <div
+                  key={CheckC1emptyRoom}
+                  style={{ float: "left", margin: "0 5px" }}
+                >
+                  <div>{CheckC1emptyRoom}</div>
                 </div>
-                <h2>コラーニングⅠ</h2>
-                <div key={emptyRooms.rooms}>
-                  {emptyRooms.rooms.map((emptyRoom: string) => {
-                    if (emptyRoom.match(/^c[1234]/gi) !== null) {
-                      return (
-                        <div
-                          key={emptyRoom}
-                          style={{ float: "left", margin: "0 5px" }}
-                        >
-                          <div>{emptyRoom}</div>
-                        </div>
-                      );
-                    }
-                    return null; // 条件に一致しない場合は null を返す
-                  })}
+              );
+            } else if (C1roomsObject[CheckC1emptyRoom] === false) {
+              return (
+                <div
+                  key={CheckC1emptyRoom}
+                  style={{ float: "left", margin: "0 5px", opacity: "0.1" }}
+                >
+                  <div>{CheckC1emptyRoom}</div>
                 </div>
-              </>
-            );
+              );
+            }
           })}
         </div>
       </main>
