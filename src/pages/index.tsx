@@ -145,37 +145,52 @@ export default function Home() {
           {day}曜日{time}時限目の空き教室を表示します
         </div>
 
-        <div style={{ display: "inline-block" }}>
-          <h2>コラーニングⅠ</h2>
+        <div style={{ display: "block" }}>
+          <h2 style={{ margin: "5px 0" }}>コラーニングⅠ</h2>
           {C1.map((CheckC1emptyRoom: string) => {
+            const C1roomNumbers = CheckC1emptyRoom.match(/\d+/g)?.[0] || "";
             return (
-              <div
-                key={CheckC1emptyRoom}
-                style={{
-                  float: "left",
-                  margin: "0 5px",
-                  opacity: C1roomsObject[CheckC1emptyRoom] ? "1" : "0.1",
-                }}
-              >
-                <div>{CheckC1emptyRoom}</div>
-              </div>
+              <>
+                {parseFloat(C1roomNumbers) % 10 === 1 &&
+                Math.floor(parseFloat(C1roomNumbers) / 100) !== 1 ? (
+                  <br />
+                ) : null}
+                <div
+                  key={CheckC1emptyRoom}
+                  style={{
+                    float: "left",
+                    margin: "0 5px",
+                    opacity: C1roomsObject[CheckC1emptyRoom] ? "1" : "0.1",
+                  }}
+                >
+                  <div>{CheckC1emptyRoom}</div>
+                </div>
+              </>
             );
           })}
         </div>
-        <div style={{ display: "inline-block" }}>
-          <h2>コラーニングⅡ</h2>
+        <br />
+        <div style={{ display: "block" }}>
+          <h2 style={{ margin: "5px 0" }}>コラーニングⅡ</h2>
           {C2.map((CheckC2emptyRoom: string) => {
+            const C2roomNumbers = CheckC2emptyRoom.match(/\d+/g)?.[0] || "";
             return (
-              <div
-                key={CheckC2emptyRoom}
-                style={{
-                  float: "left",
-                  margin: "0 5px",
-                  opacity: C2roomsObject[CheckC2emptyRoom] ? "1" : "0.1",
-                }}
-              >
-                <div>{CheckC2emptyRoom}</div>
-              </div>
+              <>
+                {parseFloat(C2roomNumbers) % 10 === 1 &&
+                Math.floor(parseFloat(C2roomNumbers) / 100) !== 1 ? (
+                  <br />
+                ) : null}
+                <div
+                  key={CheckC2emptyRoom}
+                  style={{
+                    float: "left",
+                    margin: "0 5px",
+                    opacity: C2roomsObject[CheckC2emptyRoom] ? "1" : "0.1",
+                  }}
+                >
+                  <div>{CheckC2emptyRoom}</div>
+                </div>
+              </>
             );
           })}
         </div>
