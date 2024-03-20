@@ -15,7 +15,7 @@ import SelectTimeTable from "@/components/elements/TimeTableToggleButton";
 import { CAMPUS_MODE, type CampusMode } from "@/types/CampusMode";
 import { TiME_DETAILS, type TimeDetails } from "@/types/TimeDetails";
 import { DAY_DETAILS, type DayDetails } from "@/types/DayDetails";
-import { C1_ROOMS,C2_ROOMS } from "@/types/EmptyRooms";
+import { C1_ROOMS, C2_ROOMS } from "@/types/EmptyRooms";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -145,7 +145,7 @@ export default function Home() {
           {day}曜日{time}時限目の空き教室を表示します
         </div>
 
-        <div style={{display:'inline-block'}}>
+        <div style={{ display: "inline-block" }}>
           <h2>コラーニングⅠ</h2>
           {C1.map((CheckC1emptyRoom: string) => {
             if (C1roomsObject[CheckC1emptyRoom] === true) {
@@ -169,7 +169,7 @@ export default function Home() {
             }
           })}
         </div>
-        <div style={{display:'inline-block'}}>
+        <div style={{ display: "inline-block" }}>
           <h2>コラーニングⅡ</h2>
           {C2.map((CheckC2emptyRoom: string) => {
             if (C2roomsObject[CheckC2emptyRoom] === true) {
