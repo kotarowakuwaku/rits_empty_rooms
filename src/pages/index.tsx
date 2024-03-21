@@ -15,6 +15,7 @@ import SelectTimeTable from "@/components/elements/TimeTableToggleButton";
 import { CAMPUS_MODE, type CampusMode } from "@/types/CampusMode";
 import { TiME_DETAILS, type TimeDetails } from "@/types/TimeDetails";
 import { DAY_DETAILS, type DayDetails } from "@/types/DayDetails";
+import { C1_ROOMS, C2_ROOMS } from "@/types/EmptyRooms";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,16 @@ export default function Home() {
   const [campus, setCampus] = useState<CampusMode>(CAMPUS_MODE.LeftName);
   const [refreshKey, setRefreshKey] = useState(0);
 
+  const C1: string[] = C1_ROOMS;
+  const C2: string[] = C2_ROOMS;
+
+  const [C1roomsObject, setC1roomsObject] = useState<{
+    [key: string]: boolean;
+  }>({});
+  const [C2roomsObject, setC2roomsObject] = useState<{
+    [key: string]: boolean;
+  }>({});
+
   useEffect(() => {
     const fetchData = async () => {
       const selectedCampus = campus;
@@ -30,6 +41,30 @@ export default function Home() {
       const snapshot: QuerySnapshot<DocumentData> = await getDocs(roomData); // snapshotの型をQuerySnapshot<DocumentData>に指定する
       const roomArray: DocumentData[] = snapshot.docs.map((doc) => doc.data()); // roomArrayの型をDocumentData[]に指定する
       setRooms(roomArray);
+
+      const tempC1: { [key: string]: boolean } = {};
+      const tempC2: { [key: string]: boolean } = {};
+
+      C1.forEach((room) => {
+        tempC1[room] = false;
+      });
+      C2.forEach((room) => {
+        tempC2[room] = false;
+      });
+
+      roomArray.forEach((emptyRooms) => {
+        emptyRooms.rooms.forEach((emptyRoom: string) => {
+          if (C1.includes(emptyRoom)) {
+            tempC1[emptyRoom] = true;
+          }
+          if (C2.includes(emptyRoom)) {
+            tempC2[emptyRoom] = true;
+          }
+        });
+      });
+
+      setC1roomsObject(tempC1);
+      setC2roomsObject(tempC2);
     };
 
     fetchData();
@@ -75,7 +110,9 @@ export default function Home() {
       <Head>
         <title>Create Next App</title>
       </Head>
-      <main>
+      <main
+        style={{ backgroundColor: "#EDEAE8", width: "100vw", height: "100vh" }}
+      >
         <Header />
         <Box sx={{ marginTop: "48px" }} />
         <TabButton
@@ -107,38 +144,51 @@ export default function Home() {
           <br />
           {day}曜日{time}時限目の空き教室を表示します
         </div>
-        <div>
-          {rooms.map((emptyRooms) => {
+
+        <div style={{ display: "block" }}>
+          <h2 style={{ margin: "5px 0" }}>コラーニングⅠ</h2>
+          {C1.map((CheckC1emptyRoom: string) => {
+            const C1roomNumbers = CheckC1emptyRoom.match(/\d+/g)?.[0] || "";
             return (
               <>
-                <h2>クリエーションコア</h2>
-                <div key={emptyRooms.rooms}>
-                  {emptyRooms.rooms.map((emptyRoom: string) => {
-                    if (emptyRoom.match(/^cc\d/gi) !== null) {
-                      return (
-                        <div key={emptyRoom}>
-                          <p>{emptyRoom}</p>
-                        </div>
-                      );
-                    }
-                    return null; // 条件に一致しない場合は null を返す
-                  })}
+                {parseFloat(C1roomNumbers) % 10 === 1 &&
+                Math.floor(parseFloat(C1roomNumbers) / 100) !== 1 ? (
+                  <br />
+                ) : null}
+                <div
+                  key={CheckC1emptyRoom}
+                  style={{
+                    float: "left",
+                    margin: "0 5px",
+                    opacity: C1roomsObject[CheckC1emptyRoom] ? "1" : "0.1",
+                  }}
+                >
+                  <div>{CheckC1emptyRoom}</div>
                 </div>
-                <h2>コラーニングⅠ</h2>
-                <div key={emptyRooms.rooms}>
-                  {emptyRooms.rooms.map((emptyRoom: string) => {
-                    if (emptyRoom.match(/^c[1234]/gi) !== null) {
-                      return (
-                        <div
-                          key={emptyRoom}
-                          style={{ float: "left", margin: "0 5px" }}
-                        >
-                          <div>{emptyRoom}</div>
-                        </div>
-                      );
-                    }
-                    return null; // 条件に一致しない場合は null を返す
-                  })}
+              </>
+            );
+          })}
+        </div>
+        <br />
+        <div style={{ display: "block" }}>
+          <h2 style={{ margin: "5px 0" }}>コラーニングⅡ</h2>
+          {C2.map((CheckC2emptyRoom: string) => {
+            const C2roomNumbers = CheckC2emptyRoom.match(/\d+/g)?.[0] || "";
+            return (
+              <>
+                {parseFloat(C2roomNumbers) % 10 === 1 &&
+                Math.floor(parseFloat(C2roomNumbers) / 100) !== 1 ? (
+                  <br />
+                ) : null}
+                <div
+                  key={CheckC2emptyRoom}
+                  style={{
+                    float: "left",
+                    margin: "0 5px",
+                    opacity: C2roomsObject[CheckC2emptyRoom] ? "1" : "0.1",
+                  }}
+                >
+                  <div>{CheckC2emptyRoom}</div>
                 </div>
               </>
             );
