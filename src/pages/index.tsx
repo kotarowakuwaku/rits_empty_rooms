@@ -16,6 +16,7 @@ import { CAMPUS_MODE, type CampusMode } from "@/types/CampusMode";
 import { TiME_DETAILS, type TimeDetails } from "@/types/TimeDetails";
 import { DAY_DETAILS, type DayDetails } from "@/types/DayDetails";
 import { C1_ROOMS, C2_ROOMS } from "@/types/EmptyRooms";
+import DisplayRoomList from "@/components/layouts/DisplayRoomList";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -147,52 +148,18 @@ export default function Home() {
 
         <div style={{ display: "block" }}>
           <h2 style={{ margin: "5px 0" }}>コラーニングⅠ</h2>
-          {C1.map((CheckC1emptyRoom: string) => {
-            const C1roomNumbers = CheckC1emptyRoom.match(/\d+/g)?.[0] || "";
-            return (
-              <>
-                {parseFloat(C1roomNumbers) % 10 === 1 &&
-                Math.floor(parseFloat(C1roomNumbers) / 100) !== 1 ? (
-                  <br />
-                ) : null}
-                <div
-                  key={CheckC1emptyRoom}
-                  style={{
-                    float: "left",
-                    margin: "0 5px",
-                    opacity: C1roomsObject[CheckC1emptyRoom] ? "1" : "0.1",
-                  }}
-                >
-                  <div>{CheckC1emptyRoom}</div>
-                </div>
-              </>
-            );
-          })}
+          <DisplayRoomList
+            BuildingName={C1}
+            BuildingNameObject={C1roomsObject}
+          />
         </div>
         <br />
         <div style={{ display: "block" }}>
           <h2 style={{ margin: "5px 0" }}>コラーニングⅡ</h2>
-          {C2.map((CheckC2emptyRoom: string) => {
-            const C2roomNumbers = CheckC2emptyRoom.match(/\d+/g)?.[0] || "";
-            return (
-              <>
-                {parseFloat(C2roomNumbers) % 10 === 1 &&
-                Math.floor(parseFloat(C2roomNumbers) / 100) !== 1 ? (
-                  <br />
-                ) : null}
-                <div
-                  key={CheckC2emptyRoom}
-                  style={{
-                    float: "left",
-                    margin: "0 5px",
-                    opacity: C2roomsObject[CheckC2emptyRoom] ? "1" : "0.1",
-                  }}
-                >
-                  <div>{CheckC2emptyRoom}</div>
-                </div>
-              </>
-            );
-          })}
+          <DisplayRoomList
+            BuildingName={C2}
+            BuildingNameObject={C2roomsObject}
+          />
         </div>
       </main>
     </>
