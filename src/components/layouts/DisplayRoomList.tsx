@@ -9,14 +9,11 @@ export default function DisplayRoomList({
   BuildingName = [],
   BuildingNameObject = {},
 }: DisplayRoomListProps) {
-  return BuildingName.map((CheckEmptyRoom: string) => {
+  return BuildingName.map((CheckEmptyRoom: string, index: number) => {
     const roomNumbers = CheckEmptyRoom.match(/\d+/g)?.[0] || "";
     return (
       <>
-        {parseFloat(roomNumbers) % 10 === 1 &&
-        Math.floor(parseFloat(roomNumbers) / 100) !== 1 ? (
-          <br />
-        ) : null}
+        {parseFloat(roomNumbers) % 10 === 1 && index !== 0 ? <br /> : null}
         <div
           key={CheckEmptyRoom}
           style={{
