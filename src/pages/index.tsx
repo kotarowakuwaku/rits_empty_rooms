@@ -16,7 +16,7 @@ import { CAMPUS_MODE, type CampusMode } from "@/types/CampusMode";
 import { TiME_DETAILS, type TimeDetails } from "@/types/TimeDetails";
 import { DAY_DETAILS, type DayDetails } from "@/types/DayDetails";
 import { C1_ROOMS, C2_ROOMS } from "@/types/EmptyRooms";
-import DisplayRoomList from "@/components/layouts/DisplayRoomList"
+import DisplayRoomList from "@/components/layouts/DisplayRoomList";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -148,12 +148,18 @@ export default function Home() {
 
         <div style={{ display: "block" }}>
           <h2 style={{ margin: "5px 0" }}>コラーニングⅠ</h2>
-          <DisplayRoomList  BuildingName={C1} BuildingNameObject={C1roomsObject}/>
+          <DisplayRoomList
+            BuildingName={C1}
+            BuildingNameObject={C1roomsObject}
+          />
         </div>
         <br />
         <div style={{ display: "block" }}>
           <h2 style={{ margin: "5px 0" }}>コラーニングⅡ</h2>
-          <DisplayRoomList  BuildingName={C2} BuildingNameObject={C2roomsObject}/>
+          <DisplayRoomList
+            BuildingName={C2}
+            BuildingNameObject={C2roomsObject}
+          />
         </div>
       </main>
     </>
