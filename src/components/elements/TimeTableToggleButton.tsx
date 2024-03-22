@@ -67,19 +67,19 @@ export default function TimeTableToggleButton({
           aria-label="text alignment"
         >
           <ToggleButton value={mon} aria-label="mon">
-            {mon}
+            月
           </ToggleButton>
           <ToggleButton value={tue} aria-label="tue">
-            {tue}
+            火
           </ToggleButton>
           <ToggleButton value={wed} aria-label="wed">
-            {wed}
+            水
           </ToggleButton>
           <ToggleButton value={thu} aria-label="thu">
-            {thu}
+            木
           </ToggleButton>
           <ToggleButton value={fri} aria-label="fri">
-            {fri}
+            金
           </ToggleButton>
         </StyledToggleButtonGroup>
         <Divider flexItem orientation="vertical" sx={{ mx: 0.5, my: 1 }} />

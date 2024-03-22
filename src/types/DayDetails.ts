@@ -1,9 +1,9 @@
 export const DAY_DETAILS = {
-  mon: "月",
-  tue: "火",
-  wed: "水",
-  thu: "木",
-  fri: "金",
+  mon: "mon",
+  tue: "tue",
+  wed: "wed",
+  thu: "thu",
+  fri: "fri",
 } as const;
 
 export type DayDetails = (typeof DAY_DETAILS)[keyof typeof DAY_DETAILS];

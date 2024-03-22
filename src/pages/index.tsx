@@ -1,13 +1,9 @@
 import Head from "next/head";
-import { Inter } from "next/font/google";
-import db from "@/lib/firebase/firebase";
 import { SyntheticEvent, useEffect, useState } from "react";
-import {
-  collection,
-  getDocs,
-  QuerySnapshot,
-  DocumentData,
-} from "firebase/firestore";
+import { DocumentData } from "firebase/firestore";
+import DisplayRoomList from "@/components/layouts/DisplayRoomList";
+import addEmptyRoomsData from "@/lib/firebase/addEmptyRoomsData";
+import getEmptyRoomData from "@/lib/firebase/getEmptyRoomsData";
 import Header from "@/components/layouts/Header";
 import TabButton from "@/components/elements/TabButton";
 import { Box } from "@mui/material";
@@ -16,7 +12,6 @@ import { CAMPUS_MODE, type CampusMode } from "@/types/CampusMode";
 import { TiME_DETAILS, type TimeDetails } from "@/types/TimeDetails";
 import { DAY_DETAILS, type DayDetails } from "@/types/DayDetails";
 import { C1_ROOMS, C2_ROOMS } from "@/types/EmptyRooms";
-import DisplayRoomList from "@/components/layouts/DisplayRoomList";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +19,12 @@ export default function Home() {
   const [rooms, setRooms] = useState<DocumentData[]>([]);
   const [campus, setCampus] = useState<CampusMode>(CAMPUS_MODE.LeftName);
   const [refreshKey, setRefreshKey] = useState(0);
+
+  const [day, setDay] = useState<DayDetails>(DAY_DETAILS.mon);
+  const [time, setTime] = useState<TimeDetails>(TiME_DETAILS.one);
+  const [dayTime, setDayTime] = useState("mon1");
+
+  const [isFirebaseLoading, setFirebaseLoading] = useState<boolean>(false);
 
   const C1: string[] = C1_ROOMS;
   const C2: string[] = C2_ROOMS;
@@ -34,42 +35,6 @@ export default function Home() {
   const [C2roomsObject, setC2roomsObject] = useState<{
     [key: string]: boolean;
   }>({});
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const selectedCampus = campus;
-      const roomData = collection(db, selectedCampus.toLowerCase());
-      const snapshot: QuerySnapshot<DocumentData> = await getDocs(roomData); // snapshotの型をQuerySnapshot<DocumentData>に指定する
-      const roomArray: DocumentData[] = snapshot.docs.map((doc) => doc.data()); // roomArrayの型をDocumentData[]に指定する
-      setRooms(roomArray);
-
-      const tempC1: { [key: string]: boolean } = {};
-      const tempC2: { [key: string]: boolean } = {};
-
-      C1.forEach((room) => {
-        tempC1[room] = false;
-      });
-      C2.forEach((room) => {
-        tempC2[room] = false;
-      });
-
-      roomArray.forEach((emptyRooms) => {
-        emptyRooms.rooms.forEach((emptyRoom: string) => {
-          if (C1.includes(emptyRoom)) {
-            tempC1[emptyRoom] = true;
-          }
-          if (C2.includes(emptyRoom)) {
-            tempC2[emptyRoom] = true;
-          }
-        });
-      });
-
-      setC1roomsObject(tempC1);
-      setC2roomsObject(tempC2);
-    };
-
-    fetchData();
-  }, [refreshKey]);
 
   // const tabIndex = mode === CAMPUS_MODE.LeftName ? 0 : mode === CAMPUS_MODE.CenterName ? 1 : 2;
 
@@ -82,9 +47,6 @@ export default function Home() {
       setRefreshKey((old) => old + 1);
     }
   };
-
-  const [day, setDay] = useState<DayDetails>(DAY_DETAILS.mon);
-  const [time, setTime] = useState<TimeDetails>(TiME_DETAILS.one);
 
   const handleDay = (
     event: React.MouseEvent<HTMLElement>,
@@ -105,6 +67,62 @@ export default function Home() {
       setRefreshKey((old) => old + 1);
     }
   };
+
+  useEffect(() => {
+    setFirebaseLoading(true);
+    const fetchData = async () => {
+      const roomData = await getEmptyRoomData(campus, `${day}${time}`);
+      if (roomData) {
+        setRooms(roomData);
+
+        const tempC1: { [key: string]: boolean } = {};
+        const tempC2: { [key: string]: boolean } = {};
+        C1.forEach((room) => {
+          tempC1[room] = false;
+        });
+        C2.forEach((room) => {
+          tempC2[room] = false;
+        });
+
+        roomData.forEach((emptyRooms) => {
+          emptyRooms.rooms.forEach((emptyRoom: string) => {
+            if (C1.includes(emptyRoom)) {
+              tempC1[emptyRoom] = true;
+            }
+            if (C2.includes(emptyRoom)) {
+              tempC2[emptyRoom] = true;
+            }
+          });
+        });
+
+        setC1roomsObject(tempC1);
+        setC2roomsObject(tempC2);
+      } else {
+        setRooms([]);
+        const tempC1: { [key: string]: boolean } = {};
+        const tempC2: { [key: string]: boolean } = {};
+        C1.forEach((room) => {
+          tempC1[room] = false;
+        });
+        C2.forEach((room) => {
+          tempC2[room] = false;
+        });
+        setC1roomsObject(tempC1);
+        setC2roomsObject(tempC2);
+      }
+      setFirebaseLoading(false);
+    };
+
+    fetchData();
+  }, [refreshKey]);
+
+  if (isFirebaseLoading === true) {
+    return (
+      <main>
+        <div>ろーでぃんぐ</div>
+      </main>
+    );
+  }
 
   return (
     <>
@@ -161,6 +179,13 @@ export default function Home() {
             BuildingNameObject={C2roomsObject}
           />
         </div>
+        <br />
+        <button
+          onClick={async () => await addEmptyRoomsData(["c201", "c102"])}
+          style={{ width: "100px", height: "100px" }}
+        >
+          mon1更新
+        </button>
       </main>
     </>
   );
