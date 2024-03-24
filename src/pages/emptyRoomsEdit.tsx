@@ -37,8 +37,6 @@ export default function Home() {
     [key: string]: boolean;
   }>({});
 
-
-
   const [submitC1Rooms, setSubmitC1Rooms] = useState<string[]>([]);
   const [submitC2Rooms, setSubmitC2Rooms] = useState<string[]>([]);
   const handleUpdateSubmitC1Rooms = (updatedObject: string[]) => {
@@ -46,6 +44,15 @@ export default function Home() {
   };
   const handleUpdateSubmitC2Rooms = (updatedObject: string[]) => {
     setSubmitC2Rooms(updatedObject); // ステートを更新
+  };
+
+  const handleSubmit = async () => {
+    const submitEmptyRooms: string[] = submitC1Rooms.concat(submitC2Rooms);
+    await addEmptyRoomsData(
+      submitEmptyRooms,
+      campus.toLowerCase(),
+      `${day}${time}`,
+    );
   };
 
   // const tabIndex = mode === CAMPUS_MODE.LeftName ? 0 : mode === CAMPUS_MODE.CenterName ? 1 : 2;
@@ -195,10 +202,11 @@ export default function Home() {
         </div>
         <div style={{ clear: "left" }}>
           <button
-            onClick={async () => await addEmptyRoomsData(["c201", "c102"])}
+            onClick={handleSubmit}
             style={{
-              width: "100%",
+              width: "80%",
               height: "100px",
+              margin: "10px",
               backgroundColor: "#990000",
               color: "white",
               fontSize: "1.125rem",
@@ -208,7 +216,8 @@ export default function Home() {
           </button>
         </div>
         <div>
-        {submitC1Rooms}{submitC2Rooms}
+          {submitC1Rooms}
+          {submitC2Rooms}
         </div>
       </main>
     </>
