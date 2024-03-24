@@ -12,6 +12,8 @@ import { CAMPUS_MODE, type CampusMode } from "@/types/CampusMode";
 import { TiME_DETAILS, type TimeDetails } from "@/types/TimeDetails";
 import { DAY_DETAILS, type DayDetails } from "@/types/DayDetails";
 import { C1_ROOMS, C2_ROOMS } from "@/types/EmptyRooms";
+import DisplayCheckboxRoomList from "@/components/layouts/DisplayCheckBoxList";
+import Link from "next/link";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -35,6 +37,24 @@ export default function Home() {
   const [C2roomsObject, setC2roomsObject] = useState<{
     [key: string]: boolean;
   }>({});
+
+  const [submitC1Rooms, setSubmitC1Rooms] = useState<string[]>([]);
+  const [submitC2Rooms, setSubmitC2Rooms] = useState<string[]>([]);
+  const handleUpdateSubmitC1Rooms = (updatedObject: string[]) => {
+    setSubmitC1Rooms(updatedObject); // ステートを更新
+  };
+  const handleUpdateSubmitC2Rooms = (updatedObject: string[]) => {
+    setSubmitC2Rooms(updatedObject); // ステートを更新
+  };
+
+  const handleSubmit = async () => {
+    const submitEmptyRooms: string[] = submitC1Rooms.concat(submitC2Rooms);
+    await addEmptyRoomsData(
+      submitEmptyRooms,
+      campus.toLowerCase(),
+      `${day}${time}`,
+    );
+  };
 
   // const tabIndex = mode === CAMPUS_MODE.LeftName ? 0 : mode === CAMPUS_MODE.CenterName ? 1 : 2;
 
@@ -97,6 +117,15 @@ export default function Home() {
 
         setC1roomsObject(tempC1);
         setC2roomsObject(tempC2);
+
+        const tempSubmitC1Rooms: string[] = Object.keys(tempC1).filter(
+          (key) => tempC1[key] === true,
+        );
+        const tempSubmitC2Rooms: string[] = Object.keys(tempC2).filter(
+          (key) => tempC2[key] === true,
+        );
+        setSubmitC1Rooms(tempSubmitC1Rooms);
+        setSubmitC2Rooms(tempSubmitC2Rooms);
       } else {
         setRooms([]);
         const tempC1: { [key: string]: boolean } = {};
@@ -109,6 +138,8 @@ export default function Home() {
         });
         setC1roomsObject(tempC1);
         setC2roomsObject(tempC2);
+        setSubmitC1Rooms([]);
+        setSubmitC2Rooms([]);
       }
       setFirebaseLoading(false);
     };
@@ -158,26 +189,49 @@ export default function Home() {
           timeOnChange={handleTime}
           dayOnChange={handleDay}
         />
-        <div>
-          {campus}キャンパスのページです
-          <br />
-          {day}曜日{time}時限目の空き教室を表示します
-        </div>
 
-        <div style={{ display: "block" }}>
+        <h3>ここは管理者ページです 空き教室の追加,削除,編集を行えます</h3>
+        <h4>
+          {campus}キャンパスの
+          {day}曜日{time}時限目の空き教室を編集します
+        </h4>
+
+        <div style={{ display: "block", clear: "left" }}>
           <h2 style={{ margin: "5px 0" }}>コラーニングⅠ</h2>
-          <DisplayRoomList
+          <DisplayCheckboxRoomList
             BuildingName={C1}
             BuildingNameObject={C1roomsObject}
+            submitBuildingName={handleUpdateSubmitC1Rooms}
           />
         </div>
-        <br />
-        <div style={{ display: "block" }}>
+        <div style={{ display: "block", clear: "left" }}>
           <h2 style={{ margin: "5px 0" }}>コラーニングⅡ</h2>
-          <DisplayRoomList
+          <DisplayCheckboxRoomList
             BuildingName={C2}
             BuildingNameObject={C2roomsObject}
+            submitBuildingName={handleUpdateSubmitC2Rooms}
           />
+        </div>
+        <div style={{ clear: "left" }}>
+          <Link href="/" style={{ color: "inherit" }}>
+            <button
+              onClick={handleSubmit}
+              style={{
+                width: "80%",
+                height: "100px",
+                margin: "10px",
+                backgroundColor: "#990000",
+                color: "white",
+                fontSize: "1.125rem",
+              }}
+            >
+              更新
+            </button>
+          </Link>
+        </div>
+        <div>
+          {submitC1Rooms}
+          {submitC2Rooms}
         </div>
       </main>
     </>
