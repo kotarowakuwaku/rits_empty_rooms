@@ -116,6 +116,15 @@ export default function Home() {
 
         setC1roomsObject(tempC1);
         setC2roomsObject(tempC2);
+
+        const tempSubmitC1Rooms: string[] = Object.keys(tempC1).filter(
+          (key) => tempC1[key] === true,
+        );
+        const tempSubmitC2Rooms: string[] = Object.keys(tempC2).filter(
+          (key) => tempC2[key] === true,
+        );
+        setSubmitC1Rooms(tempSubmitC1Rooms);
+        setSubmitC2Rooms(tempSubmitC2Rooms);
       } else {
         setRooms([]);
         const tempC1: { [key: string]: boolean } = {};
@@ -128,6 +137,8 @@ export default function Home() {
         });
         setC1roomsObject(tempC1);
         setC2roomsObject(tempC2);
+        setSubmitC1Rooms([]);
+        setSubmitC2Rooms([]);
       }
       setFirebaseLoading(false);
     };

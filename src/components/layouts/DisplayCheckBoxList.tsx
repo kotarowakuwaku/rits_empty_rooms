@@ -24,7 +24,7 @@ export default function DisplayCheckboxRoomList({
       ...prevState,
       [room]: !prevState[room], // 部屋の状態を反転させる
     }));
-    const updatedKeys: string[] = checkboxState[room]
+    const updatedKeys = checkboxState[room]
       ? checkboxStateKey.filter((key) => key !== room)
       : [...checkboxStateKey, room];
 
