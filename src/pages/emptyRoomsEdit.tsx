@@ -13,6 +13,7 @@ import { TiME_DETAILS, type TimeDetails } from "@/types/TimeDetails";
 import { DAY_DETAILS, type DayDetails } from "@/types/DayDetails";
 import { C1_ROOMS, C2_ROOMS } from "@/types/EmptyRooms";
 import DisplayCheckboxRoomList from "@/components/layouts/DisplayCheckBoxList";
+import Link from "next/link";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -212,19 +213,21 @@ export default function Home() {
           />
         </div>
         <div style={{ clear: "left" }}>
-          <button
-            onClick={handleSubmit}
-            style={{
-              width: "80%",
-              height: "100px",
-              margin: "10px",
-              backgroundColor: "#990000",
-              color: "white",
-              fontSize: "1.125rem",
-            }}
-          >
-            更新
-          </button>
+          <Link href="/" style={{ color: "inherit" }}>
+            <button
+              onClick={handleSubmit}
+              style={{
+                width: "80%",
+                height: "100px",
+                margin: "10px",
+                backgroundColor: "#990000",
+                color: "white",
+                fontSize: "1.125rem",
+              }}
+            >
+              更新
+            </button>
+          </Link>
         </div>
         <div>
           {submitC1Rooms}
