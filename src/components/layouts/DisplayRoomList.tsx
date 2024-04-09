@@ -10,10 +10,10 @@ export default function DisplayRoomList({
   BuildingNameObject = {},
 }: DisplayRoomListProps) {
   return BuildingName.map((CheckEmptyRoom: string, index: number) => {
-    const roomNumbers = CheckEmptyRoom.match(/\d+/g)?.[0] || "";
+    // const roomNumbers = CheckEmptyRoom.match(/\d+/g)?.[0] || "";
     return (
       <>
-        {parseFloat(roomNumbers) % 10 === 1 && index !== 0 ? <br /> : null}
+        {/* {parseFloat(roomNumbers) % 10 === 1 && index !== 0 ? <br /> : null} */}
         <div
           key={CheckEmptyRoom}
           style={{
@@ -22,7 +22,11 @@ export default function DisplayRoomList({
             opacity: BuildingNameObject[CheckEmptyRoom] ? "1" : "0.1",
           }}
         >
-          <div>{CheckEmptyRoom}</div>
+          {BuildingNameObject[CheckEmptyRoom] ? (
+            <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+              {CheckEmptyRoom}
+            </div>
+          ) : null}
         </div>
       </>
     );
