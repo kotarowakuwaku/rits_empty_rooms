@@ -6,28 +6,26 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Link from "next/link";
+import Drawer from "../elements/Drawer";
 
 export default function Header() {
   return (
-    <Box sx={{ flexGrow: 1, zIndex: "800" }}>
-      <AppBar sx={{ backgroundColor: "#990000" }}>
+    <Box sx={{ display: "flex",flexGrow: 1, zIndex: "800" }}>
+      <AppBar position="fixed" sx={{ backgroundColor: "#990000", height:"78px",lineHeight:"78px" }}>
         <Toolbar variant="dense">
           <Link href="/" style={{ color: "inherit" }}>
             <Typography
-              variant="h6"
               color="inherit"
               component="div"
-              style={{ display: "inline-block" }}
+              style={{ display: "inline-block",fontSize:"24px"}}
             >
               RitsEmptyRooms
             </Typography>
           </Link>
           <Box sx={{ flexGrow: 1 }} />
-          <Link href="/emptyRoomsEdit" style={{ color: "inherit" }}>
-            <IconButton edge="start" color="inherit" aria-label="menu">
-              <MenuIcon />
-            </IconButton>
-          </Link>
+          <Box>
+          <Drawer />
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>

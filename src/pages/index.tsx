@@ -176,7 +176,13 @@ export default function Home() {
         </div>
 
         <div style={{ display: "inline-block", margin: "10px 0 10px 10px" }}>
-          <h4 style={{ margin: "5px 0", textDecoration: "underline" }}>
+          <h4
+            style={{
+              margin: "5px 0",
+              textDecoration: "underline ",
+              textDecorationThickness: "0.5px",
+            }}
+          >
             コラーニングⅠ
           </h4>
           <div style={{ marginLeft: "50px" }}>
@@ -188,7 +194,13 @@ export default function Home() {
         </div>
         <br />
         <div style={{ display: "inline-block", margin: "10px 0 10px 10px" }}>
-          <h4 style={{ margin: "5px 0", textDecoration: "underline" }}>
+          <h4
+            style={{
+              margin: "5px 0",
+              textDecoration: "underline",
+              textDecorationThickness: "0.5px",
+            }}
+          >
             コラーニングⅡ
           </h4>
           <div style={{ marginLeft: "50px" }}>
