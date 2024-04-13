@@ -131,16 +131,14 @@ export default function Home() {
       <Head>
         <title>Create Next App</title>
       </Head>
-      <header>
-        <Header />
-      </header>
+
       <main
         style={{
           backgroundColor: "#EDEAE8",
-          marginTop: "48px",
-          height: "100vh",
+          height:"100vh"
         }}
       >
+        <Header />
         {/* <TabButton
           leftName={CAMPUS_MODE.LeftName}
           centerName={CAMPUS_MODE.CenterName}

@@ -10,7 +10,7 @@ import Drawer from "../elements/Drawer";
 
 export default function Header() {
   return (
-    <Box sx={{ display: "flex",flexGrow: 1, zIndex: "800" }}>
+    <Box sx={{ display: "flex",flexGrow: 1, zIndex: "800",marginBottom: "78px" }}>
       <AppBar position="fixed" sx={{ backgroundColor: "#990000", height:"78px",lineHeight:"78px" }}>
         <Toolbar variant="dense">
           <Link href="/" style={{ color: "inherit" }}>
