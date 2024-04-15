@@ -12,6 +12,8 @@ import { CAMPUS_MODE, type CampusMode } from "@/types/CampusMode";
 import { TiME_DETAILS, type TimeDetails } from "@/types/TimeDetails";
 import { DAY_DETAILS, type DayDetails } from "@/types/DayDetails";
 import { C1_ROOMS, C2_ROOMS } from "@/types/EmptyRooms";
+import "normalize.css";
+import Image from "next/image";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -129,12 +131,15 @@ export default function Home() {
       <Head>
         <title>Create Next App</title>
       </Head>
+
       <main
-        style={{ backgroundColor: "#EDEAE8", width: "100vw", height: "100vh" }}
+        style={{
+          backgroundColor: "#EDEAE8",
+          height:"100vh"
+        }}
       >
         <Header />
-        <Box sx={{ marginTop: "48px" }} />
-        <TabButton
+        {/* <TabButton
           leftName={CAMPUS_MODE.LeftName}
           centerName={CAMPUS_MODE.CenterName}
           rightName={CAMPUS_MODE.RightName}
@@ -157,28 +162,59 @@ export default function Home() {
           dayValue={day}
           timeOnChange={handleTime}
           dayOnChange={handleDay}
-        />
-        <div>
-          {campus}キャンパスのページです
-          <br />
-          {day}曜日{time}時限目の空き教室を表示します
+        /> */}
+        <div
+          style={{
+            textAlign: "center",
+            fontWeight: "bold",
+            padding: "40px 0 20px 0",
+          }}
+        >
+          現在空いている教室
         </div>
 
-        <div style={{ display: "block" }}>
-          <h2 style={{ margin: "5px 0" }}>コラーニングⅠ</h2>
-          <DisplayRoomList
-            BuildingName={C1}
-            BuildingNameObject={C1roomsObject}
-          />
+        <div style={{ display: "inline-block", margin: "10px 0 10px 10px" }}>
+          <h4
+            style={{
+              margin: "5px 0",
+              textDecoration: "underline ",
+              textDecorationThickness: "0.5px",
+            }}
+          >
+            コラーニングⅠ
+          </h4>
+          <div style={{ marginLeft: "50px" }}>
+            <DisplayRoomList
+              BuildingName={C1}
+              BuildingNameObject={C1roomsObject}
+            />
+          </div>
         </div>
         <br />
-        <div style={{ display: "block" }}>
-          <h2 style={{ margin: "5px 0" }}>コラーニングⅡ</h2>
-          <DisplayRoomList
-            BuildingName={C2}
-            BuildingNameObject={C2roomsObject}
-          />
+        <div style={{ display: "inline-block", margin: "10px 0 10px 10px" }}>
+          <h4
+            style={{
+              margin: "5px 0",
+              textDecoration: "underline",
+              textDecorationThickness: "0.5px",
+            }}
+          >
+            コラーニングⅡ
+          </h4>
+          <div style={{ marginLeft: "50px" }}>
+            <DisplayRoomList
+              BuildingName={C2}
+              BuildingNameObject={C2roomsObject}
+            />
+          </div>
         </div>
+        <Image
+          src="/meeting_room_icon.png"
+          width={258}
+          height={258}
+          alt={""}
+          style={{ position: "fixed", bottom: 0, right: 0 }}
+        />
       </main>
     </>
   );
