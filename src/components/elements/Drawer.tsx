@@ -12,7 +12,6 @@ import Link from "next/link";
 import * as React from "react";
 import "normalize.css";
 
-
 type Anchor = "right";
 
 export default function Drawer() {
@@ -36,7 +35,7 @@ export default function Drawer() {
     { text: "時間割登録画面", href: "/making" },
     { text: "空き教室一覧", href: "/making" },
     { text: "検索", href: "/making" },
-    { text: "管理者画面", href: "/emptyRoomsEdit" }
+    { text: "管理者画面", href: "/emptyRoomsEdit" },
   ];
 
   return (
@@ -50,16 +49,16 @@ export default function Drawer() {
             color="inherit"
             aria-label="menu"
           >
-            <MenuIcon sx={{fontSize:"36px"}}/>
+            <MenuIcon sx={{ fontSize: "36px" }} />
           </IconButton>
           <SwipeableDrawer
             anchor={anchor}
             open={state[anchor]}
             onClose={toggleDrawer(anchor, false)}
             onOpen={toggleDrawer(anchor, true)}
-            sx={{zIndex:"8"}}
+            sx={{ zIndex: "8" }}
           >
-            <DrawerList items={listItems}/>
+            <DrawerList items={listItems} />
           </SwipeableDrawer>
         </React.Fragment>
       ))}
@@ -82,19 +81,26 @@ const DrawerList: React.FC<DrawerListProps> = ({ items }) => (
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        marginTop:"78px",
+        marginTop: "78px",
       }}
     >
       {items.map(({ text, href }, index) => (
         <ListItem
           key={index}
           disablePadding
-          sx={{ borderBottom: "1px solid #D9D9D9", height: "60px", width:"300px" }}
+          sx={{
+            borderBottom: "1px solid #D9D9D9",
+            height: "60px",
+            width: "300px",
+          }}
         >
           <ListItemButton sx={{ display: "inline-block" }}>
             <Link href={href} passHref style={{ textDecoration: "none" }}>
               <ListItemText
-              primaryTypographyProps={{fontFamily: "Inter, sans-serif",fontWeight:"medium"}}
+                primaryTypographyProps={{
+                  fontFamily: "Inter, sans-serif",
+                  fontWeight: "medium",
+                }}
                 primary={text}
                 sx={{
                   color: "#2A2B27",
