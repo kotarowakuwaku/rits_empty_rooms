@@ -161,7 +161,7 @@ export default function Home() {
         <title>Create Next App</title>
       </Head>
       <main
-        style={{ backgroundColor: "#EDEAE8", width: "100vw", height: "100vh" }}
+        style={{ backgroundColor: "#EDEAE8", width: "100%", height: "100%" }}
       >
         <Header />
         <Box sx={{ marginTop: "48px" }} />
@@ -217,7 +217,7 @@ export default function Home() {
             <button
               onClick={handleSubmit}
               style={{
-                width: "80%",
+                width: "70%",
                 height: "100px",
                 margin: "10px",
                 backgroundColor: "#990000",
@@ -228,10 +228,6 @@ export default function Home() {
               更新
             </button>
           </Link>
-        </div>
-        <div>
-          {submitC1Rooms}
-          {submitC2Rooms}
         </div>
       </main>
     </>

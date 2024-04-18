@@ -10,21 +10,26 @@ import Drawer from "../elements/Drawer";
 
 export default function Header() {
   return (
-    <Box sx={{ display: "flex",flexGrow: 1, zIndex: "800",marginBottom: "78px" }}>
-      <AppBar position="fixed" sx={{ backgroundColor: "#990000", height:"78px",lineHeight:"78px" }}>
+    <Box
+      sx={{ display: "flex", flexGrow: 1, zIndex: "800", marginBottom: "78px" }}
+    >
+      <AppBar
+        position="fixed"
+        sx={{ backgroundColor: "#990000", height: "78px", lineHeight: "78px" }}
+      >
         <Toolbar variant="dense">
           <Link href="/" style={{ color: "inherit" }}>
             <Typography
               color="inherit"
               component="div"
-              style={{ display: "inline-block",fontSize:"24px"}}
+              style={{ display: "inline-block", fontSize: "24px" }}
             >
               RitsEmptyRooms
             </Typography>
           </Link>
           <Box sx={{ flexGrow: 1 }} />
           <Box>
-          <Drawer />
+            <Drawer />
           </Box>
         </Toolbar>
       </AppBar>

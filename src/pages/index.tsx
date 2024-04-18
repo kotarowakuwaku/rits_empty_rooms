@@ -135,7 +135,7 @@ export default function Home() {
       <main
         style={{
           backgroundColor: "#EDEAE8",
-          height:"100vh"
+          height: "100vh",
         }}
       >
         <Header />
