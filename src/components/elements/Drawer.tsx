@@ -71,7 +71,7 @@ interface DrawerListProps {
 }
 
 const DrawerList: React.FC<DrawerListProps> = ({ items }) => (
-  <Box role="presentation">
+  <Box role="presentation" sx={{ overflow: "hidden" }}>
     <List
       sx={{
         backgroundColor: "#EDEAE8",
