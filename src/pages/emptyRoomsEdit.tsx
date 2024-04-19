@@ -24,7 +24,7 @@ export default function Home() {
 
   const [day, setDay] = useState<DayDetails>(DAY_DETAILS.mon);
   const [time, setTime] = useState<TimeDetails>(TiME_DETAILS.one);
-  const [dayTime, setDayTime] = useState("mon1");
+  const [dayTime, setDayTime] = useState("月");
 
   const [isFirebaseLoading, setFirebaseLoading] = useState<boolean>(false);
 
@@ -41,10 +41,10 @@ export default function Home() {
   const [submitC1Rooms, setSubmitC1Rooms] = useState<string[]>([]);
   const [submitC2Rooms, setSubmitC2Rooms] = useState<string[]>([]);
   const handleUpdateSubmitC1Rooms = (updatedObject: string[]) => {
-    setSubmitC1Rooms(updatedObject); // ステートを更新
+    setSubmitC1Rooms(updatedObject);
   };
   const handleUpdateSubmitC2Rooms = (updatedObject: string[]) => {
-    setSubmitC2Rooms(updatedObject); // ステートを更新
+    setSubmitC2Rooms(updatedObject);
   };
 
   const handleSubmit = async () => {
@@ -74,6 +74,23 @@ export default function Home() {
   ) => {
     if (newDay !== null) {
       setDay(newDay);
+      switch (newDay) {
+        case DAY_DETAILS.mon:
+          setDayTime("月");
+          break;
+        case DAY_DETAILS.tue:
+          setDayTime("火");
+          break;
+        case DAY_DETAILS.wed:
+          setDayTime("水");
+          break;
+        case DAY_DETAILS.thu:
+          setDayTime("木");
+          break;
+        case DAY_DETAILS.fri:
+          setDayTime("金");
+          break;
+      }
       setRefreshKey((old) => old + 1);
     }
   };
@@ -193,7 +210,7 @@ export default function Home() {
         <h3>ここは管理者ページです 空き教室の追加,削除,編集を行えます</h3>
         <h4>
           {campus}キャンパスの
-          {day}曜日{time}時限目の空き教室を編集します
+          {dayTime}曜日{time}時限目の空き教室を編集します
         </h4>
 
         <div style={{ display: "block", clear: "left" }}>
