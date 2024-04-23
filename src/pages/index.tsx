@@ -130,6 +130,9 @@ export default function Home() {
     <>
       <Head>
         <title>Create Next App</title>
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icon.png"></link>
+        <meta name="theme-color" content="#EDEAE8" />
       </Head>
 
       <main
