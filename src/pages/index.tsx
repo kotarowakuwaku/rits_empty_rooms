@@ -129,9 +129,10 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Create Next App</title>
+        <title>RitsEmptyRooms</title>
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icon.png"></link>
+        <link rel="icon" href="favicon.ico" />
         <meta name="theme-color" content="#EDEAE8" />
       </Head>
 

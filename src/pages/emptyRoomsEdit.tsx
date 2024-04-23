@@ -175,7 +175,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Create Next App</title>
+        <title>RitsEmptyRooms_admin</title>
       </Head>
       <main
         style={{ backgroundColor: "#EDEAE8", width: "100%", height: "100%" }}
