@@ -143,13 +143,14 @@ export default function Home() {
         }}
       >
         <Header />
-        {/* <TabButton
+        <TabButton
           leftName={CAMPUS_MODE.LeftName}
           centerName={CAMPUS_MODE.CenterName}
           rightName={CAMPUS_MODE.RightName}
           value={campus}
           onChange={handleSwitch}
         />
+        <Box sx={{display: "flex", justifyContent: "center",margin:"10px 0"}}>
         <SelectTimeTable
           mon={DAY_DETAILS.mon}
           tue={DAY_DETAILS.tue}
@@ -166,7 +167,8 @@ export default function Home() {
           dayValue={day}
           timeOnChange={handleTime}
           dayOnChange={handleDay}
-        /> */}
+        />
+        </Box>
         <div
           style={{
             textAlign: "center",
