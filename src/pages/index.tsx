@@ -7,6 +7,8 @@ import getEmptyRoomData from "@/lib/firebase/getEmptyRoomsData";
 import Header from "@/components/layouts/Header";
 import TabButton from "@/components/elements/TabButton";
 import { Box } from "@mui/material";
+import TimeTable from "@/components/elements/TimeTableButton";
+import DayTimeTable from "@/components/elements/DayTimeTableButton";
 import SelectTimeTable from "@/components/elements/TimeTableToggleButton";
 import { CAMPUS_MODE, type CampusMode } from "@/types/CampusMode";
 import { TiME_DETAILS, type TimeDetails } from "@/types/TimeDetails";
@@ -150,8 +152,21 @@ export default function Home() {
           value={campus}
           onChange={handleSwitch}
         />
-        <Box sx={{display: "flex", justifyContent: "center",margin:"10px 0"}}>
-        <SelectTimeTable
+        <Box
+          sx={{ display: "flex", justifyContent: "center", margin: "10px 0" }}
+        >
+          <TimeTable
+            one={TiME_DETAILS.one}
+            two={TiME_DETAILS.two}
+            three={TiME_DETAILS.three}
+            four={TiME_DETAILS.four}
+            five={TiME_DETAILS.five}
+            six={TiME_DETAILS.six}
+            timeValue={time}
+            timeOnChange={handleTime}
+          />
+
+          {/* <SelectTimeTable
           mon={DAY_DETAILS.mon}
           tue={DAY_DETAILS.tue}
           wed={DAY_DETAILS.wed}
@@ -167,7 +182,7 @@ export default function Home() {
           dayValue={day}
           timeOnChange={handleTime}
           dayOnChange={handleDay}
-        />
+        /> */}
         </Box>
         <div
           style={{
