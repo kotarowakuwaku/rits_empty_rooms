@@ -6,9 +6,9 @@ import ToggleButton, { ToggleButtonProps } from "@mui/material/ToggleButton";
 import ToggleButtonGroup, {
   toggleButtonGroupClasses,
 } from "@mui/material/ToggleButtonGroup";
-import { TimeTable } from "@/types/TimeTable";
+import { DayTimeTable } from "@/types/DayTimeTable";
 
-interface TabButtonProps extends TimeTable {
+interface TabButtonProps extends DayTimeTable {
   dayValue: string;
   dayOnChange?: ToggleButtonProps["onChange"];
 }

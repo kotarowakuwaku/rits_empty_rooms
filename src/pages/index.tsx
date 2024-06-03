@@ -155,6 +155,15 @@ export default function Home() {
         <Box
           sx={{ display: "flex", justifyContent: "center", margin: "10px 0" }}
         >
+          <DayTimeTable 
+          mon={DAY_DETAILS.mon}
+          tue={DAY_DETAILS.tue}
+          wed={DAY_DETAILS.wed}
+          thu={DAY_DETAILS.thu}
+          fri={DAY_DETAILS.fri}
+          dayValue={day}
+          dayOnChange={handleDay}
+          />
           <TimeTable
             one={TiME_DETAILS.one}
             two={TiME_DETAILS.two}
