@@ -46,6 +46,7 @@ export default function TimeTableToggleButton({
           flexWrap: "wrap",
           width: "fit-content",
           justifyContent: "center",
+          margin:"0 10px",
         }}
       >
         <StyledToggleButtonGroup
