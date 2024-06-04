@@ -22,7 +22,7 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 const buttonStyle = {
   margin: "0",
   padding: "0",
-  width: "96px",
+  width: "76px",
   height: "39px",
   fontSize: "1.5rem",
 };
