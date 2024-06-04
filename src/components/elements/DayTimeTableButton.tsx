@@ -53,7 +53,6 @@ export default function TimeTableToggleButton({
           exclusive
           onChange={dayOnChange}
           aria-label="text alignment"
-          sx={{ width: "100%" }}
         >
           <ToggleButton value={mon} aria-label="mon" sx={buttonStyle}>
             月

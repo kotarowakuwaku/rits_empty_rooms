@@ -15,19 +15,17 @@ interface TabButtonProps extends TimeTable {
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   [`& .${toggleButtonGroupClasses.grouped}`]: {
-    margin: theme.spacing(1),
-    border: 0,
-    borderRadius: theme.shape.borderRadius,
-    [`&.${toggleButtonGroupClasses.disabled}`]: {
-      border: 0,
-    },
+    border: "1px solid",
   },
-  [`& .${toggleButtonGroupClasses.middleButton},& .${toggleButtonGroupClasses.lastButton}`]:
-    {
-      marginmon: -1,
-      bordermon: "1px solid transparent",
-    },
 }));
+
+const buttonStyle = {
+  margin: "0",
+  padding: "0",
+  width: "96px",
+  height: "39px",
+  fontSize: "1.5rem",
+};
 
 export default function TimeTableToggleButton({
   one = 0,
@@ -45,35 +43,34 @@ export default function TimeTableToggleButton({
         elevation={0}
         sx={{
           display: "flex",
-          border: (theme) => `1px solid ${theme.palette.divider}`,
+          border: "1px solid",
           flexWrap: "wrap",
           width: "fit-content",
           justifyContent: "center",
         }}
       >
         <StyledToggleButtonGroup
-          size="medium"
           value={timeValue}
           exclusive
           onChange={timeOnChange}
           aria-label="text formatting"
         >
-          <ToggleButton value={one} aria-label="1">
+          <ToggleButton value={one} aria-label="1" sx={buttonStyle}>
             {one}
           </ToggleButton>
-          <ToggleButton value={two} aria-label="2">
+          <ToggleButton value={two} aria-label="2" sx={buttonStyle}>
             {two}
           </ToggleButton>
-          <ToggleButton value={three} aria-label="3">
+          <ToggleButton value={three} aria-label="3" sx={buttonStyle}>
             {three}
           </ToggleButton>
-          <ToggleButton value={four} aria-label="4">
+          <ToggleButton value={four} aria-label="4" sx={buttonStyle}>
             {four}
           </ToggleButton>
-          <ToggleButton value={five} aria-label="5">
+          <ToggleButton value={five} aria-label="5" sx={buttonStyle}>
             {five}
           </ToggleButton>
-          <ToggleButton value={six} aria-label="6">
+          <ToggleButton value={six} aria-label="6" sx={buttonStyle}>
             {six}
           </ToggleButton>
         </StyledToggleButtonGroup>
