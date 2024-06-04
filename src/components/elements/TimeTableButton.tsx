@@ -48,6 +48,7 @@ export default function TimeTableToggleButton({
           border: (theme) => `1px solid ${theme.palette.divider}`,
           flexWrap: "wrap",
           width: "fit-content",
+          justifyContent: "center",
         }}
       >
         <StyledToggleButtonGroup

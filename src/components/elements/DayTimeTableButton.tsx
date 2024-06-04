@@ -15,19 +15,17 @@ interface TabButtonProps extends DayTimeTable {
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   [`& .${toggleButtonGroupClasses.grouped}`]: {
-    margin: theme.spacing(1),
-    border: 0,
-    borderRadius: theme.shape.borderRadius,
-    [`&.${toggleButtonGroupClasses.disabled}`]: {
-      border: 0,
-    },
+    border: "1px solid",
   },
-  [`& .${toggleButtonGroupClasses.middleButton},& .${toggleButtonGroupClasses.lastButton}`]:
-    {
-      marginmon: -1,
-      bordermon: "1px solid transparent",
-    },
 }));
+
+const buttonStyle = {
+  margin: "0",
+  padding: "0",
+  width: "96px",
+  height: "39px",
+  fontSize: "1.5rem",
+};
 
 export default function TimeTableToggleButton({
   mon = "",
@@ -44,31 +42,32 @@ export default function TimeTableToggleButton({
         elevation={0}
         sx={{
           display: "flex",
-          border: (theme) => `1px solid ${theme.palette.divider}`,
+          border: "1px solid",
           flexWrap: "wrap",
           width: "fit-content",
+          justifyContent: "center",
         }}
       >
         <StyledToggleButtonGroup
-          size="medium"
           value={dayValue}
           exclusive
           onChange={dayOnChange}
           aria-label="text alignment"
+          sx={{ width: "100%" }}
         >
-          <ToggleButton value={mon} aria-label="mon">
+          <ToggleButton value={mon} aria-label="mon" sx={buttonStyle}>
             月
           </ToggleButton>
-          <ToggleButton value={tue} aria-label="tue">
+          <ToggleButton value={tue} aria-label="tue" sx={buttonStyle}>
             火
           </ToggleButton>
-          <ToggleButton value={wed} aria-label="wed">
+          <ToggleButton value={wed} aria-label="wed" sx={buttonStyle}>
             水
           </ToggleButton>
-          <ToggleButton value={thu} aria-label="thu">
+          <ToggleButton value={thu} aria-label="thu" sx={buttonStyle}>
             木
           </ToggleButton>
-          <ToggleButton value={fri} aria-label="fri">
+          <ToggleButton value={fri} aria-label="fri" sx={buttonStyle}>
             金
           </ToggleButton>
         </StyledToggleButtonGroup>
