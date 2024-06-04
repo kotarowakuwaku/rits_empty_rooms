@@ -7,7 +7,8 @@ import getEmptyRoomData from "@/lib/firebase/getEmptyRoomsData";
 import Header from "@/components/layouts/Header";
 import TabButton from "@/components/elements/TabButton";
 import { Box } from "@mui/material";
-import SelectTimeTable from "@/components/elements/TimeTableToggleButton";
+import TimeTable from "@/components/elements/TimeTableButton";
+import DayTimeTable from "@/components/elements/DayTimeTableButton";
 import { CAMPUS_MODE, type CampusMode } from "@/types/CampusMode";
 import { TiME_DETAILS, type TimeDetails } from "@/types/TimeDetails";
 import { DAY_DETAILS, type DayDetails } from "@/types/DayDetails";
@@ -149,35 +150,50 @@ export default function Home() {
           rightName={CAMPUS_MODE.RightName}
           value={campus}
           onChange={handleSwitch}
-        />
-        <SelectTimeTable
-          mon={DAY_DETAILS.mon}
-          tue={DAY_DETAILS.tue}
-          wed={DAY_DETAILS.wed}
-          thu={DAY_DETAILS.thu}
-          fri={DAY_DETAILS.fri}
-          one={TiME_DETAILS.one}
-          two={TiME_DETAILS.two}
-          three={TiME_DETAILS.three}
-          four={TiME_DETAILS.four}
-          five={TiME_DETAILS.five}
-          six={TiME_DETAILS.six}
-          timeValue={time}
-          dayValue={day}
-          timeOnChange={handleTime}
-          dayOnChange={handleDay}
         /> */}
         <div
           style={{
             textAlign: "center",
             fontWeight: "bold",
+            fontSize: "2rem",
             padding: "40px 0 20px 0",
           }}
         >
-          現在空いている教室
+          {campus}の空き教室一覧
         </div>
 
-        <div style={{ display: "inline-block", margin: "10px 0 10px 10px" }}>
+        <Box
+          sx={{ display: "flex", justifyContent: "center", margin: "10px 0" }}
+        >
+          <DayTimeTable
+            mon={DAY_DETAILS.mon}
+            tue={DAY_DETAILS.tue}
+            wed={DAY_DETAILS.wed}
+            thu={DAY_DETAILS.thu}
+            fri={DAY_DETAILS.fri}
+            dayValue={day}
+            dayOnChange={handleDay}
+          />
+          <TimeTable
+            one={TiME_DETAILS.one}
+            two={TiME_DETAILS.two}
+            three={TiME_DETAILS.three}
+            four={TiME_DETAILS.four}
+            five={TiME_DETAILS.five}
+            six={TiME_DETAILS.six}
+            timeValue={time}
+            timeOnChange={handleTime}
+          />
+        </Box>
+
+        <div
+          style={{
+            display: "flex",
+            margin: "50px 0 10px 10px",
+            justifyContent: "center",
+            flexFlow: "column",
+          }}
+        >
           <h4
             style={{
               margin: "5px 0",
