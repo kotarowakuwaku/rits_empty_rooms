@@ -22,9 +22,13 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 const buttonStyle = {
   margin: "0",
   padding: "0",
-  width: "76px",
+  width: "80px",
   height: "39px",
   fontSize: "1.5rem",
+  "@media screen and (max-width:480px)": {
+    width: "53px",
+    height: "26px",
+  },
 };
 
 export default function TimeTableToggleButton({
