@@ -163,7 +163,15 @@ export default function Home() {
         </div>
 
         <Box
-          sx={{ display: "flex", justifyContent: "center", margin: "10px 0" }}
+          sx={{
+            display: "grid",
+            gap: "10px",
+            gridTemplateColumns: "repeat(auto-fit, minmax(480px, 1fr))",
+            placeItems: "center",
+            "@media screen and (max-width:480px)": {
+              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            },
+          }}
         >
           <DayTimeTable
             mon={DAY_DETAILS.mon}

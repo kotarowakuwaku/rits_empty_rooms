@@ -25,6 +25,10 @@ const buttonStyle = {
   width: "96px",
   height: "39px",
   fontSize: "1.5rem",
+  "@media screen and (max-width:480px)": {
+    width: "64px",
+    height: "28px",
+  },
 };
 
 export default function TimeTableToggleButton({
