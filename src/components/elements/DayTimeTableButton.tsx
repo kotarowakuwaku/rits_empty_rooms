@@ -28,6 +28,7 @@ const buttonStyle = {
   "@media screen and (max-width:480px)": {
     width: "64px",
     height: "28px",
+    fontSize: "1rem",
   },
 };
 
