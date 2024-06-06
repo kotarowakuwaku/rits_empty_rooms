@@ -151,16 +151,20 @@ export default function Home() {
           value={campus}
           onChange={handleSwitch}
         /> */}
-        <div
-          style={{
+        <Box
+          sx={{
             textAlign: "center",
             fontWeight: "bold",
             fontSize: "2rem",
             padding: "40px 0 20px 0",
+            "@media screen and (max-width:480px)": {
+              fontSize: "1rem",
+              padding: "30px 0 20px 0",
+            },
           }}
         >
           {campus}の空き教室一覧
-        </div>
+        </Box>
 
         <Box
           sx={{
