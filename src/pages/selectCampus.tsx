@@ -1,26 +1,18 @@
 import Head from "next/head";
-import { SyntheticEvent, useEffect, useState } from "react";
-import { DocumentData } from "firebase/firestore";
-import DisplayRoomList from "@/components/layouts/DisplayRoomList";
-import addEmptyRoomsData from "@/lib/firebase/addEmptyRoomsData";
-import getEmptyRoomData from "@/lib/firebase/getEmptyRoomsData";
+import {useEffect, useState } from "react";
 import Header from "@/components/layouts/Header";
-import TabButton from "@/components/elements/TabButton";
 import { Box } from "@mui/material";
-import TimeTable from "@/components/elements/TimeTableButton";
-import DayTimeTable from "@/components/elements/DayTimeTableButton";
 import { CAMPUS_MODE, type CampusMode } from "@/types/CampusMode";
-import { TiME_DETAILS, type TimeDetails } from "@/types/TimeDetails";
-import { DAY_DETAILS, type DayDetails } from "@/types/DayDetails";
-import { C1_ROOMS, C2_ROOMS } from "@/types/EmptyRooms";
-import DisplayCheckboxRoomList from "@/components/layouts/DisplayCheckBoxList";
-import Link from "next/link";
 import ControlledRadioButtonsGroup from "@/components/layouts/radiobutton";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 // const inter = Inter({ subsets: ["latin"] });
 
 export default function SelectCampus() {
+  const router = useRouter();
+
+
   const [campus, setCampus] = useState<CampusMode>(CAMPUS_MODE.LeftName);
   const [refreshKey, setRefreshKey] = useState(0);
 
@@ -34,6 +26,12 @@ export default function SelectCampus() {
     setCampus(campusMode);
     setRefreshKey((old) => old + 1);
   };
+
+  useEffect(() => {
+  if (router.query.campus != undefined) {
+    setCampus(router.query.campus as CampusMode);
+  }
+},[]);
 
   if (isFirebaseLoading === true) {
     return (
@@ -58,7 +56,7 @@ export default function SelectCampus() {
           height: "100vh",
         }}
       >
-        <Header />
+        <Header campus={campus} />
         <Box
           sx={{
             textAlign: "center",
@@ -77,7 +75,7 @@ export default function SelectCampus() {
           sx={{
             display: "flex",
             justifyContent: "center",
-            margin:"20px 0"
+            margin: "20px 0",
           }}
         >
           <ControlledRadioButtonsGroup

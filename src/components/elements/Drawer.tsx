@@ -12,10 +12,18 @@ import Link from "next/link";
 import * as React from "react";
 import "normalize.css";
 
+interface DrawerProps {
+  campus?: string;
+}
+
 type Anchor = "right";
 
-export default function Drawer() {
+export default function Drawer({ campus = "" }: DrawerProps) {
   const [state, setState] = React.useState({ right: false });
+
+  const query = {
+    campus: campus,
+  };
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -30,8 +38,16 @@ export default function Drawer() {
     };
 
   const listItems = [
-    { text: "リアルタイムの空き教室", href: "/" },
-    { text: "キャンパス設定画面", href: "/selectCampus" },
+    {
+      text: "リアルタイムの空き教室",
+      href: { pathname: "/", query: query },
+      as: "/",
+    },
+    {
+      text: "キャンパス設定画面",
+      href: { pathname: "/selectCampus", query: query },
+      as: "/selectCampus",
+    },
     { text: "空き教室一覧", href: "/making" },
   ];
 
@@ -64,7 +80,11 @@ export default function Drawer() {
 }
 
 interface DrawerListProps {
-  items: { text: string; href: string }[];
+  items: {
+    text: string;
+    href: string | { pathname: string; query: { campus: string } };
+    as?: string;
+  }[];
 }
 
 const DrawerList: React.FC<DrawerListProps> = ({ items }) => (
