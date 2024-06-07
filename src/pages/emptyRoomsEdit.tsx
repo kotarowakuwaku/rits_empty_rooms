@@ -18,7 +18,7 @@ import Link from "next/link";
 
 // const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function EmptyRoomEdit() {
   const [rooms, setRooms] = useState<DocumentData[]>([]);
   const [campus, setCampus] = useState<CampusMode>(CAMPUS_MODE.LeftName);
   const [refreshKey, setRefreshKey] = useState(0);

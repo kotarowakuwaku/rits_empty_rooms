@@ -22,8 +22,18 @@ import Image from "next/image";
 
 export default function SelectCampus() {
   const [campus, setCampus] = useState<CampusMode>(CAMPUS_MODE.LeftName);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const [isFirebaseLoading, setFirebaseLoading] = useState<boolean>(false);
+
+  const onClickRadioButton = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    newAlignment: string,
+  ) => {
+    const campusMode = newAlignment as CampusMode;
+    setCampus(campusMode);
+    setRefreshKey((old) => old + 1);
+  };
 
   if (isFirebaseLoading === true) {
     return (
@@ -63,21 +73,32 @@ export default function SelectCampus() {
         >
           キャンパス設定画面
         </Box>
-        <ControlledRadioButtonsGroup />
         <Box
           sx={{
-            position:"relative",
-            margin:"0 auto",
-            width:"80%",
-            height:"30%",
-            maxWidth:"700px"
+            display: "flex",
+            justifyContent: "center",
+            margin:"20px 0"
           }}
         >
-        <Image
-            src="/bkc.png"
+          <ControlledRadioButtonsGroup
+            campus={campus}
+            onClickRadioButton={onClickRadioButton}
+          />
+        </Box>
+        <Box
+          sx={{
+            position: "relative",
+            margin: "0 auto",
+            width: "80%",
+            height: "30%",
+            maxWidth: "700px",
+          }}
+        >
+          <Image
+            src={`/${campus}.png`}
             alt=""
             layout="fill"
-            objectFit='contain'
+            objectFit="contain"
           />
         </Box>
         <Box
@@ -85,7 +106,7 @@ export default function SelectCampus() {
             position: "fixed",
             bottom: 0,
             right: 0,
-            width: "50%",
+            width: "40%",
             maxWidth: "256px",
           }}
         >

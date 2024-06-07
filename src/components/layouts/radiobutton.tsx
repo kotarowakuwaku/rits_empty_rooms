@@ -1,37 +1,40 @@
 import * as React from "react";
 import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
+import RadioGroup, { RadioGroupProps } from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import { CampusMode } from "@/types/CampusMode";
 
-export default function ControlledRadioButtonsGroup() {
-  const [value, setValue] = React.useState("bkc");
+interface RadioButtonProps {
+  campus: string;
+  onClickRadioButton?: RadioGroupProps["onChange"];
+}
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
-  };
-
+export default function ControlledRadioButtonsGroup({
+  campus = "",
+  onClickRadioButton = () => {},
+}: RadioButtonProps) {
   return (
     <FormControl>
       <RadioGroup
         aria-labelledby="demo-controlled-radio-buttons-group"
         name="controlled-radio-buttons-group"
-        value={value}
-        onChange={handleChange}
+        value={campus}
+        onChange={onClickRadioButton}
       >
         <FormControlLabel
-          value="kic"
+          value="KIC"
           control={<Radio />}
           label="衣笠キャンパス(KIC)"
         />
         <FormControlLabel
-          value="oic"
+          value="OIC"
           control={<Radio />}
           label="大阪茨木キャンパス(OIC)"
         />
         <FormControlLabel
-          value="bkc"
+          value="BKC"
           control={<Radio />}
           label="びわこ・くさつキャンパス(BKC)"
         />
