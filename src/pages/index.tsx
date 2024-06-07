@@ -15,10 +15,13 @@ import { DAY_DETAILS, type DayDetails } from "@/types/DayDetails";
 import { C1_ROOMS, C2_ROOMS } from "@/types/EmptyRooms";
 import "normalize.css";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 // const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const router = useRouter();
+
   const [rooms, setRooms] = useState<DocumentData[]>([]);
   const [campus, setCampus] = useState<CampusMode>(CAMPUS_MODE.LeftName);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -74,6 +77,9 @@ export default function Home() {
   useEffect(() => {
     setFirebaseLoading(true);
     const fetchData = async () => {
+      if (router.query.campus != undefined) {
+        setCampus(router.query.campus as CampusMode);
+      }
       const roomData = await getEmptyRoomData(campus, `${day}${time}`);
       if (roomData) {
         setRooms(roomData);
@@ -143,7 +149,7 @@ export default function Home() {
           height: "100vh",
         }}
       >
-        <Header />
+        <Header campus={campus}/>
         {/* <TabButton
           leftName={CAMPUS_MODE.LeftName}
           centerName={CAMPUS_MODE.CenterName}
