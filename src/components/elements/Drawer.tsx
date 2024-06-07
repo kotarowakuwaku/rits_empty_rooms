@@ -31,7 +31,7 @@ export default function Drawer() {
 
   const listItems = [
     { text: "リアルタイムの空き教室", href: "/" },
-    { text: "キャンパス設定画面", href: "/making" },
+    { text: "キャンパス設定画面", href: "/selectCampus" },
     { text: "空き教室一覧", href: "/making" },
   ];
 
