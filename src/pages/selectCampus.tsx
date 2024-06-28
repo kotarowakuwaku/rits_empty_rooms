@@ -1,5 +1,5 @@
 import Head from "next/head";
-import {useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "@/components/layouts/Header";
 import { Box } from "@mui/material";
 import { CAMPUS_MODE, type CampusMode } from "@/types/CampusMode";
@@ -11,7 +11,6 @@ import { useRouter } from "next/router";
 
 export default function SelectCampus() {
   const router = useRouter();
-
 
   const [campus, setCampus] = useState<CampusMode>(CAMPUS_MODE.LeftName);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -28,10 +27,10 @@ export default function SelectCampus() {
   };
 
   useEffect(() => {
-  if (router.query.campus != undefined) {
-    setCampus(router.query.campus as CampusMode);
-  }
-},[]);
+    if (router.query.campus != undefined) {
+      setCampus(router.query.campus as CampusMode);
+    }
+  }, []);
 
   if (isFirebaseLoading === true) {
     return (

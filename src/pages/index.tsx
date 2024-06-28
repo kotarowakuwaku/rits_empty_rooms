@@ -149,7 +149,7 @@ export default function Home() {
           height: "100vh",
         }}
       >
-        <Header campus={campus}/>
+        <Header campus={campus} />
         {/* <TabButton
           leftName={CAMPUS_MODE.LeftName}
           centerName={CAMPUS_MODE.CenterName}
