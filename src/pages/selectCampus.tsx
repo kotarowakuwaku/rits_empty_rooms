@@ -103,13 +103,13 @@ export default function SelectCampus() {
           sx={{
             position: "fixed",
             bottom: 0,
-            right: 0,
+            right: 30,
             width: "40%",
-            maxWidth: "256px",
+            maxWidth: "196px",
           }}
         >
           <Image
-            src="/meeting_room_icon.png"
+            src="/RER_logo.png"
             width={256}
             height={256}
             layout="responsive"
