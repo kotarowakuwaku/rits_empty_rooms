@@ -89,6 +89,7 @@ export default function SelectCampus() {
             width: "80%",
             height: "30%",
             maxWidth: "700px",
+            zIndex: "700",
           }}
         >
           <Image
