@@ -2,8 +2,18 @@ import Header from "@/components/layouts/Header";
 import { Box } from "@mui/material";
 import Image from "next/image";
 import Head from "next/head";
+import { CampusMode, CAMPUS_MODE } from "@/types/CampusMode";
+import router, { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export default function Document() {
+  const [campus, setCampus] = useState<CampusMode>(CAMPUS_MODE.LeftName);
+
+  useEffect(() => {
+    if (router.query.campus != undefined) {
+      setCampus(router.query.campus as CampusMode);
+    }
+  }, []);
   return (
     <>
       <Head>
@@ -23,7 +33,7 @@ export default function Document() {
           alignItems: "center",
         }}
       >
-        <Header />
+        <Header campus={campus} />
         <Box
           sx={{
             display: "flex",

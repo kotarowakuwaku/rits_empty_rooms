@@ -48,7 +48,11 @@ export default function Drawer({ campus = "" }: DrawerProps) {
       href: { pathname: "/selectCampus", query: query },
       as: "/selectCampus",
     },
-    { text: "空き教室一覧", href: "/making" },
+    {
+      text: "空き教室一覧",
+      href: { pathname: "/making", query: query },
+      as: "making",
+    },
   ];
 
   return (
