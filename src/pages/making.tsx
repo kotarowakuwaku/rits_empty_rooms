@@ -33,7 +33,7 @@ export default function Document() {
           alignItems: "center",
         }}
       >
-        <Header campus={campus}/>
+        <Header campus={campus} />
         <Box
           sx={{
             display: "flex",
