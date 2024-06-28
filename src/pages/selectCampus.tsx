@@ -46,7 +46,7 @@ export default function SelectCampus() {
       <Head>
         <title>RitsEmptyRooms</title>
         <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/icon.png"></link>
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png"></link>
         <link rel="icon" href="favicon.ico" />
         <meta name="theme-color" content="#EDEAE8" />
       </Head>
