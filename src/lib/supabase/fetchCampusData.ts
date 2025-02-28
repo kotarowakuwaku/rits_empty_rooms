@@ -4,7 +4,7 @@ export const fetchCampusesData = async () => {
   try {
     const { data: campusesData, error: campusesError } = await supabase
       .from("campuses")
-      .select("*");
+      .select("id, name, official_name");
 
     if (campusesError) {
       throw campusesError;
