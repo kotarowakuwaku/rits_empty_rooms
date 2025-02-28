@@ -1,15 +1,14 @@
 import Head from "next/head";
 import { SyntheticEvent, useEffect, useState } from "react";
-import { DocumentData } from "firebase/firestore";
 import DisplayRoomList from "@/components/layouts/DisplayRoomList";
-import addEmptyRoomsData from "@/lib/firebase/addEmptyRoomsData";
-import getEmptyRoomData from "@/lib/firebase/getEmptyRoomsData";
+// import addEmptyRoomsData from "@/lib/firebase/addEmptyRoomsData";
+// import getEmptyRoomData from "@/lib/firebase/getEmptyRoomsData";
 import Header from "@/components/layouts/Header";
 import TabButton from "@/components/elements/TabButton";
 import { Box } from "@mui/material";
 import TimeTable from "@/components/elements/TimeTableButton";
 import DayTimeTable from "@/components/elements/DayTimeTableButton";
-import { CAMPUS_MODE, type CampusMode } from "@/types/CampusMode";
+// import { CAMPUS_MODE, type CampusMode } from "@/types/CampusMode";
 import { TiME_DETAILS, type TimeDetails } from "@/types/TimeDetails";
 import { DAY_DETAILS, type DayDetails } from "@/types/DayDetails";
 import { C1_ROOMS, C2_ROOMS } from "@/types/EmptyRooms";
@@ -17,15 +16,17 @@ import "normalize.css";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Campus } from "@/types/Campus";
+import { fetchCampusesData } from "@/lib/supabase/fetchCampusData";
 
 // const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const router = useRouter();
 
-  const [rooms, setRooms] = useState<DocumentData[]>([]);
+  // const [rooms, setRooms] = useState<DocumentData[]>([]);
 
-  const [selectedCampus, setSelectedCampus] = useState<CampusMode>(CAMPUS_MODE.LeftName);
+  const [campuses, setCampuses] = useState<Campus[]>([]);
+  const [selectedCampus, setSelectedCampus] = useState<string>("");
 
   const [refreshKey, setRefreshKey] = useState(0);
 
@@ -49,7 +50,7 @@ export default function Home() {
 
   const handleSwitch = (
     event: SyntheticEvent<Element, Event>,
-    newAlignment: CampusMode | null,
+    newAlignment: string | null,
   ) => {
     if (newAlignment !== null) {
       setSelectedCampus(newAlignment);
@@ -79,54 +80,61 @@ export default function Home() {
 
   useEffect(() => {
     setFirebaseLoading(true);
+    if (!router.isReady) return;
+
     const fetchData = async () => {
       if (router.query.campus != undefined) {
-        setSelectedCampus(router.query.campus as CampusMode);
+        setSelectedCampus(router.query.campus as string);
+      }else{
+        const campusesData = await fetchCampusesData();
+        if (campusesData) {
+          setSelectedCampus(campusesData[0].name);
+        }
       }
-      const roomData = await getEmptyRoomData(selectedCampus, `${day}${time}`);
-      if (roomData) {
-        setRooms(roomData);
+      // const roomData = await getEmptyRoomData(selectedCampus, `${day}${time}`);
+      // if (roomData) {
+      //   setRooms(roomData);
 
-        const tempC1: { [key: string]: boolean } = {};
-        const tempC2: { [key: string]: boolean } = {};
-        C1.forEach((room) => {
-          tempC1[room] = false;
-        });
-        C2.forEach((room) => {
-          tempC2[room] = false;
-        });
+      //   const tempC1: { [key: string]: boolean } = {};
+      //   const tempC2: { [key: string]: boolean } = {};
+      //   C1.forEach((room) => {
+      //     tempC1[room] = false;
+      //   });
+      //   C2.forEach((room) => {
+      //     tempC2[room] = false;
+      //   });
 
-        roomData.forEach((emptyRooms) => {
-          emptyRooms.rooms.forEach((emptyRoom: string) => {
-            if (C1.includes(emptyRoom)) {
-              tempC1[emptyRoom] = true;
-            }
-            if (C2.includes(emptyRoom)) {
-              tempC2[emptyRoom] = true;
-            }
-          });
-        });
+      //   roomData.forEach((emptyRooms) => {
+      //     emptyRooms.rooms.forEach((emptyRoom: string) => {
+      //       if (C1.includes(emptyRoom)) {
+      //         tempC1[emptyRoom] = true;
+      //       }
+      //       if (C2.includes(emptyRoom)) {
+      //         tempC2[emptyRoom] = true;
+      //       }
+      //     });
+      //   });
 
-        setC1roomsObject(tempC1);
-        setC2roomsObject(tempC2);
-      } else {
-        setRooms([]);
-        const tempC1: { [key: string]: boolean } = {};
-        const tempC2: { [key: string]: boolean } = {};
-        C1.forEach((room) => {
-          tempC1[room] = false;
-        });
-        C2.forEach((room) => {
-          tempC2[room] = false;
-        });
-        setC1roomsObject(tempC1);
-        setC2roomsObject(tempC2);
-      }
+      //   setC1roomsObject(tempC1);
+      //   setC2roomsObject(tempC2);
+      // } else {
+      //   setRooms([]);
+      //   const tempC1: { [key: string]: boolean } = {};
+      //   const tempC2: { [key: string]: boolean } = {};
+      //   C1.forEach((room) => {
+      //     tempC1[room] = false;
+      //   });
+      //   C2.forEach((room) => {
+      //     tempC2[room] = false;
+      //   });
+      //   setC1roomsObject(tempC1);
+      //   setC2roomsObject(tempC2);
+      // }
       setFirebaseLoading(false);
     };
 
     fetchData();
-  }, [refreshKey]);
+  }, [refreshKey, router.isReady]);
 
   if (isFirebaseLoading === true) {
     return (
