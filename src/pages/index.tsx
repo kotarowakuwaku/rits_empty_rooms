@@ -16,6 +16,7 @@ import { C1_ROOMS, C2_ROOMS } from "@/types/EmptyRooms";
 import "normalize.css";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { Campus } from "@/types/Campus";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,9 @@ export default function Home() {
   const router = useRouter();
 
   const [rooms, setRooms] = useState<DocumentData[]>([]);
-  const [campus, setCampus] = useState<CampusMode>(CAMPUS_MODE.LeftName);
+
+  const [selectedCampus, setSelectedCampus] = useState<CampusMode>(CAMPUS_MODE.LeftName);
+
   const [refreshKey, setRefreshKey] = useState(0);
 
   const [day, setDay] = useState<DayDetails>(DAY_DETAILS.mon);
@@ -49,7 +52,7 @@ export default function Home() {
     newAlignment: CampusMode | null,
   ) => {
     if (newAlignment !== null) {
-      setCampus(newAlignment);
+      setSelectedCampus(newAlignment);
       setRefreshKey((old) => old + 1);
     }
   };
@@ -78,9 +81,9 @@ export default function Home() {
     setFirebaseLoading(true);
     const fetchData = async () => {
       if (router.query.campus != undefined) {
-        setCampus(router.query.campus as CampusMode);
+        setSelectedCampus(router.query.campus as CampusMode);
       }
-      const roomData = await getEmptyRoomData(campus, `${day}${time}`);
+      const roomData = await getEmptyRoomData(selectedCampus, `${day}${time}`);
       if (roomData) {
         setRooms(roomData);
 
@@ -149,7 +152,7 @@ export default function Home() {
           height: "100vh",
         }}
       >
-        <Header campus={campus} />
+        <Header campus={selectedCampus} />
         {/* <TabButton
           leftName={CAMPUS_MODE.LeftName}
           centerName={CAMPUS_MODE.CenterName}
@@ -169,7 +172,7 @@ export default function Home() {
             },
           }}
         >
-          {campus}の空き教室一覧
+          {selectedCampus}の空き教室一覧
         </Box>
 
         <Box

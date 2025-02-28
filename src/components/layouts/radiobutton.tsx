@@ -5,14 +5,17 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { CampusMode } from "@/types/CampusMode";
+import { Campus } from "@/types/Campus";
 
 interface RadioButtonProps {
-  campus: string;
+  campuses: Campus[];
+  selectedCampus: string;
   onClickRadioButton?: RadioGroupProps["onChange"];
 }
 
 export default function ControlledRadioButtonsGroup({
-  campus = "",
+  campuses,
+  selectedCampus = "",
   onClickRadioButton = () => {},
 }: RadioButtonProps) {
   return (
@@ -20,24 +23,17 @@ export default function ControlledRadioButtonsGroup({
       <RadioGroup
         aria-labelledby="demo-controlled-radio-buttons-group"
         name="controlled-radio-buttons-group"
-        value={campus}
+        value={selectedCampus}
         onChange={onClickRadioButton}
       >
-        <FormControlLabel
-          value="KIC"
-          control={<Radio />}
-          label="衣笠キャンパス(KIC)"
-        />
-        <FormControlLabel
-          value="OIC"
-          control={<Radio />}
-          label="大阪茨木キャンパス(OIC)"
-        />
-        <FormControlLabel
-          value="BKC"
-          control={<Radio />}
-          label="びわこ・くさつキャンパス(BKC)"
-        />
+        {campuses.map((campus) => (
+          <FormControlLabel
+            key={campus.id}
+            value={campus.name}
+            control={<Radio />}
+            label={`${campus.official_name}(${campus.name})`}
+          />
+        ))}
       </RadioGroup>
     </FormControl>
   );

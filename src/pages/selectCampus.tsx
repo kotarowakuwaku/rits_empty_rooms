@@ -2,17 +2,19 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import Header from "@/components/layouts/Header";
 import { Box } from "@mui/material";
-import { CAMPUS_MODE, type CampusMode } from "@/types/CampusMode";
 import ControlledRadioButtonsGroup from "@/components/layouts/radiobutton";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { Campus } from "@/types/Campus";
+import { fetchCampusesData } from "@/lib/supabase/fetchCampusData";
 
 // const inter = Inter({ subsets: ["latin"] });
 
 export default function SelectCampus() {
   const router = useRouter();
 
-  const [campus, setCampus] = useState<CampusMode>(CAMPUS_MODE.LeftName);
+  const [campuses, setCampuses] = useState<Campus[]>([]);
+  const [campus, setCampus] = useState<string>("");
   const [refreshKey, setRefreshKey] = useState(0);
 
   const [isFirebaseLoading, setFirebaseLoading] = useState<boolean>(false);
@@ -21,16 +23,27 @@ export default function SelectCampus() {
     event: React.ChangeEvent<HTMLInputElement>,
     newAlignment: string,
   ) => {
-    const campusMode = newAlignment as CampusMode;
+    const campusMode = newAlignment as string;
     setCampus(campusMode);
     setRefreshKey((old) => old + 1);
   };
 
   useEffect(() => {
-    if (router.query.campus != undefined) {
-      setCampus(router.query.campus as CampusMode);
-    }
-  }, []);
+    if (!router.isReady) return;
+
+    const fetchData = async () => {
+      const campusesData = await fetchCampusesData();
+      if (campusesData) {
+        setCampuses(campusesData);
+        if (router.query.campus !== undefined) {
+          setCampus(router.query.campus as string);
+        } else {
+          setCampus(campusesData[0].name);
+        }
+      }
+    };
+    fetchData();
+  }, [router.isReady]);
 
   if (isFirebaseLoading === true) {
     return (
@@ -78,7 +91,8 @@ export default function SelectCampus() {
           }}
         >
           <ControlledRadioButtonsGroup
-            campus={campus}
+            campuses={campuses}
+            selectedCampus={campus}
             onClickRadioButton={onClickRadioButton}
           />
         </Box>
