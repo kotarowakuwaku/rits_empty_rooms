@@ -85,7 +85,7 @@ export default function Home() {
     const fetchData = async () => {
       if (router.query.campus != undefined) {
         setSelectedCampus(router.query.campus as string);
-      }else{
+      } else {
         const campusesData = await fetchCampusesData();
         if (campusesData) {
           setSelectedCampus(campusesData[0].name);
