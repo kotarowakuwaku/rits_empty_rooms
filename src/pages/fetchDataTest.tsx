@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { fetchSupabaseData } from "@/lib/supabase/fetch_supabaseData_test";
+import { fetchCampusesData } from "@/lib/supabase/fetchCampusData";
 
 const FetchDataTest = () => {
   const [data, setData] = useState<Record<string, any[]>>({});
+  const [campuses, setCampuses] = useState<any[]>([]);
 
   const groupByKey = <T, K extends keyof T>(
     array: T[],
@@ -24,6 +26,11 @@ const FetchDataTest = () => {
       if (roomsData) {
         console.log(roomsData);
         setData(groupByKey(roomsData, "building_id"));
+      }
+      const campusesData = await fetchCampusesData();
+      if (campusesData) {
+        console.log(campusesData);
+        setCampuses(campusesData);
       }
     };
 
