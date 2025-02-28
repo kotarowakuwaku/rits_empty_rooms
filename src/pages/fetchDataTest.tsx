@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase/supabase";
+import { fetchSupabaseData } from "@/lib/supabase/fetch_supabaseData_test";
 
 const FetchDataTest = () => {
   const [data, setData] = useState<Record<string, any[]>>({});
@@ -20,19 +20,10 @@ const FetchDataTest = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const { data: roomsData, error: roomsError } = await supabase
-          .from("rooms")
-          .select("*");
-
-        if (roomsError) {
-          throw roomsError;
-        }
-        console.log(groupByKey(roomsData, "building_id"));
-        setData(groupByKey(roomsData, "building_id") || {});
-      } catch (error) {
-        console.log("error", error);
-        setData({});
+      const roomsData = await fetchSupabaseData();
+      if (roomsData) {
+        console.log(roomsData);
+        setData(groupByKey(roomsData, "building_id"));
       }
     };
 
