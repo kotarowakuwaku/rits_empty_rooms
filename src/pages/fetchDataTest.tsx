@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase/supabase";
 
-const fetchDataTect = () => {
+const FetchDataTest = () => {
   const [data, setData] = useState<Record<string, any[]>>({});
 
   const groupByKey = <T, K extends keyof T>(
@@ -58,4 +58,4 @@ const fetchDataTect = () => {
   );
 };
 
-export default fetchDataTect;
+export default FetchDataTest;
